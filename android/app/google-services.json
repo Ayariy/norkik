@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "256068830968",
+    "firebase_url": "https://norkikproject-default-rtdb.firebaseio.com",
+    "project_id": "norkikproject",
+    "storage_bucket": "norkikproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256068830968:android:6e9d99b773c03b61a29d0d",
+        "android_client_info": {
+          "package_name": "com.upec.norkik_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256068830968-haqftfspgel6l6ftnjose9u95pe1h76r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfIo6FLz0AbZOP5arI3u5SgO0dzZ1T3-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256068830968-haqftfspgel6l6ftnjose9u95pe1h76r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
