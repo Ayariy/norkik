@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:norkik_app/utils/color_util.dart';
-import 'package:norkik_app/utils/fecha_subtitulo.dart';
 
 class RecordatorioPage extends StatefulWidget {
   const RecordatorioPage({Key? key}) : super(key: key);
@@ -34,7 +33,6 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: getPrimaryColor(),
         onPressed: () {},
         child: Icon(Icons.add),
       ),
@@ -106,7 +104,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
             blurRadius: 5.0,
             spreadRadius: 2.0,
             offset: Offset(2.0, 4.0))
-      ], color: Color.fromRGBO(230, 230, 230, 1)),
+      ], color: Theme.of(context).cardColor),
       padding: EdgeInsets.all(10),
       child: Row(
         children: [
@@ -114,7 +112,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
             child: DropdownButton(
               isDense: true,
               isExpanded: true,
-              dropdownColor: Colors.white,
+              // dropdownColor: Colors.white,
               value: _opcionSeleccionada,
               items: getOpcionesDropdown(),
               onChanged: (String? op) {

@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:norkik_app/providers/theme.dart';
+import 'package:norkik_app/utils/theme_data.dart';
+import 'package:provider/provider.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -9,17 +12,21 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _getDrawerHeader(context),
-          _getDrawerListView(context),
-        ],
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _getDrawerHeader(context),
+            _getDrawerListView(context),
+          ],
+        ),
       ),
     );
   }
 
-  Expanded _getDrawerListView(BuildContext context) {
+  Widget _getDrawerListView(BuildContext context) {
+    final themeChanger = Provider.of<ThemeChanger>(context);
     return Expanded(
         child: FadeInLeft(
       child: ListView(
@@ -31,35 +38,51 @@ class NavigationDrawer extends StatelessWidget {
               Icons.note_alt_outlined, 'Asignaturas', 'asignaturas', context),
           _getItemTile(
               Icons.people_alt_outlined, 'Docentes', 'docentes', context),
-          const Divider(
-            color: Colors.white30,
+          Divider(
+            color:
+                Theme.of(context).appBarTheme.foregroundColor!.withOpacity(0.5),
           ),
           _getItemTile(
               Icons.settings, 'Configuración', 'configuracion', context),
           _getItemTile(Icons.person_pin, 'Perfil', 'perfil', context),
-          const Divider(
-            color: Colors.white30,
+          Divider(
+            color:
+                Theme.of(context).appBarTheme.foregroundColor!.withOpacity(0.5),
           ),
           _getItemTile(
               Icons.camera_rounded, 'Herramientas', 'herramientas', context),
-          const Divider(color: Colors.white30),
-          ListTile(
-            title: Column(
-              children: const [
-                FadeInImage(
-                    fit: BoxFit.cover,
-                    width: 200,
-                    placeholder: AssetImage('assets/loadingDos.gif'),
-                    image: AssetImage('assets/NorkikBlanco.png')),
-              ],
-            ),
-            subtitle: Center(
-              child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: const Text(
-                    '"Tu agenda inteligente"',
-                    style: TextStyle(color: Colors.white),
-                  )),
+          Divider(
+              color: Theme.of(context)
+                  .appBarTheme
+                  .foregroundColor!
+                  .withOpacity(0.5)),
+          GestureDetector(
+            onTap: () {
+              if (Brightness.light == Theme.of(context).brightness) {
+                themeChanger.setTheme(getDarkTheme());
+              } else {
+                themeChanger.setTheme(getNorkikTheme());
+              }
+            },
+            child: ListTile(
+              title: Column(
+                children: const [
+                  FadeInImage(
+                      fit: BoxFit.cover,
+                      width: 200,
+                      placeholder: AssetImage('assets/loadingDos.gif'),
+                      image: AssetImage('assets/NorkikBlanco.png')),
+                ],
+              ),
+              subtitle: Center(
+                child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      '"Tu agenda inteligente"',
+                      style: TextStyle(
+                          color: Theme.of(context).appBarTheme.foregroundColor),
+                    )),
+              ),
             ),
           )
         ],
@@ -117,11 +140,11 @@ class NavigationDrawer extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.foregroundColor,
       ),
       title: Text(
         text,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),
       ),
       onTap: () {
         Navigator.pushNamed(context, ruta);

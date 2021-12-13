@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:norkik_app/pages/calendario_page.dart';
-import 'package:norkik_app/pages/comunidad_page.dart';
-import 'package:norkik_app/pages/horario_page.dart';
-import 'package:norkik_app/pages/noticias_page.dart';
-import 'package:norkik_app/pages/recordatorio_page.dart';
-import 'package:norkik_app/pages/resumen_page.dart';
-import 'package:norkik_app/utils/color_util.dart';
+import 'package:norkik_app/pages/home_pages/recordatorio_page.dart';
+import 'package:norkik_app/pages/home_pages/resumen_page.dart';
 import 'package:norkik_app/widget/navigation_drawer.dart';
+import 'calendario_page.dart';
+import 'comunidad_page.dart';
+import 'horario_page.dart';
+import 'noticias_page.dart';
 
 class NavigationBarHomePage extends StatefulWidget {
   NavigationBarHomePage({Key? key}) : super(key: key);
@@ -26,7 +25,6 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
     metodoAppBarName();
   }
 
-  @override
   void metodoAppBarName() {
     switch (_pageIndex) {
       case 0:
@@ -60,16 +58,16 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
         index: 0,
         height: 60.0,
         items: <Widget>[
-          _iconoItem(Icons.view_agenda_rounded),
-          _iconoItem(Icons.backup_table_rounded),
-          _iconoItem(Icons.auto_awesome_motion),
-          _iconoItem(Icons.notifications_rounded),
-          _iconoItem(Icons.calendar_view_week),
-          _iconoItem(Icons.calendar_today_rounded),
+          _iconoItem(Icons.view_agenda_rounded, context),
+          _iconoItem(Icons.backup_table_rounded, context),
+          _iconoItem(Icons.auto_awesome_motion, context),
+          _iconoItem(Icons.notifications_rounded, context),
+          _iconoItem(Icons.calendar_view_week, context),
+          _iconoItem(Icons.calendar_today_rounded, context),
         ],
-        color: getPrimaryColor(),
-        buttonBackgroundColor: getPrimaryColor(),
-        backgroundColor: Colors.white,
+        color: Theme.of(context).primaryColor,
+        buttonBackgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 300),
         onTap: (index) {
@@ -85,8 +83,11 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
     );
   }
 
-  Widget _iconoItem(IconData icon) {
-    return Icon(icon, size: 35, color: Colors.white);
+  Widget _iconoItem(IconData icon, context) {
+    // print(getNorkikTheme().appBarTheme.foregroundColor);
+    // print(getDarkTheme().appBarTheme.foregroundColor);
+    return Icon(icon,
+        size: 35, color: Theme.of(context).appBarTheme.foregroundColor);
   }
 
   Widget _getPageIndex() {

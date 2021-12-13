@@ -1,9 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
-class NoticiasPage extends StatelessWidget {
+class NoticiasPage extends StatefulWidget {
   const NoticiasPage({Key? key}) : super(key: key);
 
+  @override
+  State<NoticiasPage> createState() => _NoticiasPageState();
+}
+
+class _NoticiasPageState extends State<NoticiasPage> {
+  bool selectedIconStar = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +39,7 @@ class NoticiasPage extends StatelessWidget {
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Color.fromRGBO(230, 230, 230, 1),
+          color: Theme.of(context).cardColor,
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.black26,
@@ -62,10 +68,15 @@ class NoticiasPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.star_outlined,
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    selectedIconStar = !selectedIconStar;
+                  });
+                },
+                icon: Icon(selectedIconStar ? Icons.star : Icons.star_border),
                 color: Colors.yellow.shade800,
-                size: 40,
+                iconSize: 40,
               ),
               Text('02 dic. 2021')
             ],
@@ -90,7 +101,18 @@ class NoticiasPage extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.center,
-          color: Colors.black54,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              Colors.black.withAlpha(0),
+              Colors.black38,
+              Colors.black45,
+              Colors.black54,
+              Colors.black54
+            ],
+          )),
           width: sizeScreen.width,
           height: 50,
           child: Padding(

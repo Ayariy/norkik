@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:norkik_app/utils/fecha_subtitulo.dart';
+
 import 'package:norkik_app/widget/charts_lineal.dart';
 import 'package:animate_do/animate_do.dart';
 
@@ -9,30 +9,32 @@ class ResumenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          FadeInDown(child: _cardReporteChart()),
-          _textoDiaFecha('HOY', '30 sept. 2021'),
-          FadeInDown(child: _cardEventos()),
-          FadeInDown(child: _cardHorario()),
-          _textoDiaFecha('MAÑANA', '01 oct. 2021'),
-          FadeInDown(child: _cardEventos()),
-          FadeInDown(child: _cardHorario()),
-          _textoDiaFecha('JUEVES', '01 oct. 2021'),
-          _textoDiaFecha('VIERNES', '02 oct. 2021'),
-          _textoDiaFecha('SÁBADO', '03 oct. 2021'),
-          _textoDiaFecha('DOMINGO', '04 oct. 2021'),
-          _textoDiaFecha('LUNES', '05 oct. 2021'),
-        ],
+      body: ListTileTheme(
+        iconColor: Theme.of(context).iconTheme.color,
+        child: ListView(
+          padding: const EdgeInsets.all(10),
+          children: [
+            FadeInDown(child: _cardReporteChart(context)),
+            _textoDiaFecha('HOY', '30 sept. 2021'),
+            FadeInDown(child: _cardEventos()),
+            FadeInDown(child: _cardHorario(context)),
+            _textoDiaFecha('MAÑANA', '01 oct. 2021'),
+            FadeInDown(child: _cardEventos()),
+            FadeInDown(child: _cardHorario(context)),
+            _textoDiaFecha('JUEVES', '01 oct. 2021'),
+            _textoDiaFecha('VIERNES', '02 oct. 2021'),
+            _textoDiaFecha('SÁBADO', '03 oct. 2021'),
+            _textoDiaFecha('DOMINGO', '04 oct. 2021'),
+            _textoDiaFecha('LUNES', '05 oct. 2021'),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _cardReporteChart() {
+  Widget _cardReporteChart(context) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color.fromRGBO(230, 230, 230, 1),
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       child: Column(
@@ -43,23 +45,27 @@ class ResumenPage extends StatelessWidget {
             minVerticalPadding: 18,
             leading: Icon(
               Icons.bar_chart_rounded,
-              color: Colors.black,
             ),
             title: Text('Reporte semanal'),
           ),
           ChartsLineal(),
           SizedBox(
-            height: 0.15,
-            child: Container(
-              color: Colors.black38,
-            ),
-          ),
+              height: 0.15,
+              child: Container(
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .color!
+                    .withOpacity(0.5),
+              )),
           ListTile(
             horizontalTitleGap: 11,
             minLeadingWidth: 0,
             visualDensity: VisualDensity(horizontal: 0, vertical: -4),
             title: Text('Mostrar más'),
-            leading: Icon(Icons.arrow_forward_rounded, color: Colors.black),
+            leading: Icon(
+              Icons.arrow_forward_rounded,
+            ),
             onTap: () {},
           )
         ],
@@ -70,7 +76,6 @@ class ResumenPage extends StatelessWidget {
   Widget _cardEventos() {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color.fromRGBO(230, 230, 230, 1),
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       child: Column(
@@ -81,7 +86,6 @@ class ResumenPage extends StatelessWidget {
             minVerticalPadding: 18,
             leading: Icon(
               Icons.view_agenda_rounded,
-              color: Colors.black,
             ),
             title: Text('Eventos pendientes'),
           ),
@@ -94,8 +98,9 @@ class ResumenPage extends StatelessWidget {
                 title: Text('Evento 1'),
                 subtitle: Text('Tarea'),
                 leading: Text('1.'),
-                trailing:
-                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.black),
+                trailing: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                ),
                 onTap: () {},
               ),
               ListTile(
@@ -107,7 +112,6 @@ class ResumenPage extends StatelessWidget {
                 leading: Text('2.'),
                 trailing: Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: Colors.black,
                 ),
                 onTap: () {},
               ),
@@ -121,10 +125,9 @@ class ResumenPage extends StatelessWidget {
     );
   }
 
-  Widget _cardHorario() {
+  Widget _cardHorario(context) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color.fromRGBO(230, 230, 230, 1),
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       child: Column(
@@ -135,7 +138,6 @@ class ResumenPage extends StatelessWidget {
             minVerticalPadding: 18,
             leading: Icon(
               Icons.calendar_view_week,
-              color: Colors.black,
             ),
             title: Text('Próximas clases'),
           ),
@@ -151,8 +153,7 @@ class ResumenPage extends StatelessWidget {
                   backgroundColor: Color(0xffBA1301),
                   maxRadius: 10,
                 ),
-                trailing:
-                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.black),
+                trailing: Icon(Icons.arrow_forward_ios_rounded),
                 onTap: () {},
               ),
               ListTile(
@@ -165,8 +166,7 @@ class ResumenPage extends StatelessWidget {
                   backgroundColor: Color(0xff2B7DE3),
                   maxRadius: 10,
                 ),
-                trailing:
-                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.black),
+                trailing: Icon(Icons.arrow_forward_ios_rounded),
                 onTap: () {},
               ),
             ],
@@ -174,7 +174,11 @@ class ResumenPage extends StatelessWidget {
           SizedBox(
             height: 0.15,
             child: Container(
-              color: Colors.black38,
+              color: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .color!
+                  .withOpacity(0.5),
             ),
           ),
           ListTile(
@@ -182,7 +186,7 @@ class ResumenPage extends StatelessWidget {
             minLeadingWidth: 0,
             visualDensity: VisualDensity(horizontal: 0, vertical: -4),
             title: Text('Mostrar más'),
-            leading: Icon(Icons.arrow_forward_rounded, color: Colors.black),
+            leading: Icon(Icons.arrow_forward_rounded),
             onTap: () {},
           )
         ],
