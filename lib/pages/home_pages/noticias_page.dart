@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:norkik_app/models/noticia_model.dart';
+import 'package:norkik_app/providers/norkikdb_providers/noticia_provider.dart';
 
 class NoticiasPage extends StatefulWidget {
   const NoticiasPage({Key? key}) : super(key: key);
@@ -10,17 +12,20 @@ class NoticiasPage extends StatefulWidget {
 
 class _NoticiasPageState extends State<NoticiasPage> {
   bool selectedIconStar = true;
+  probando() async {
+    NoticiaProvider noticiaProvider = NoticiaProvider();
+    List<NoticiaModel> noticias = await noticiaProvider.getNoticias();
+    noticias.forEach((element) {
+      print(element.fecha);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: [
-          FadeInDown(child: _cardNoticiaPost(context)),
-          FadeInDown(child: _cardNoticiaPost(context)),
-          FadeInDown(child: _cardNoticiaPost(context)),
-        ],
-      ),
-    );
+    probando();
+    return Scaffold(body: ListView.builder(itemBuilder: (context, int) {
+      return FadeInDown(child: _cardNoticiaPost(context));
+    }));
   }
 
   Widget _cardNoticiaPost(context) {

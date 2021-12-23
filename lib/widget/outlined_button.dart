@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class OutlinedButtonNorkik extends StatelessWidget {
   final String textButton;
-  final String? ruta;
+  final Function? functionButton;
   const OutlinedButtonNorkik({
     Key? key,
     required this.textButton,
-    this.ruta,
+    this.functionButton,
   }) : super(key: key);
 
   @override
@@ -41,7 +41,9 @@ class OutlinedButtonNorkik extends StatelessWidget {
             return Colors.transparent;
           })),
       onPressed: () {
-        Navigator.pushNamed(context, ruta!);
+        functionButton!();
+
+        // Navigator.pushNamed(context, ruta!);
       },
       child: Text(textButton),
     );

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ElevatedButtonNorkik extends StatelessWidget {
   final String textButton;
   final String? ruta;
-  const ElevatedButtonNorkik({
+  final Function? functionButton;
+  ElevatedButtonNorkik({
     Key? key,
     required this.textButton,
     this.ruta,
+    this.functionButton,
   }) : super(key: key);
 
   @override
@@ -40,7 +42,7 @@ class ElevatedButtonNorkik extends StatelessWidget {
             return Theme.of(context).primaryColor;
           })),
       onPressed: () {
-        Navigator.pushNamed(context, ruta!);
+        functionButton!();
       },
       child: Text(textButton),
       // Theme.of(context).primaryColor,

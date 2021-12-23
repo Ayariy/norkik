@@ -1,6 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:norkik_app/pages/autenticacion_pages/autenticacion_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:norkik_app/models/user_model.dart';
+
+import 'package:norkik_app/providers/autenticacion.dart';
+import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
+
+import 'package:norkik_app/routes/routes.dart';
+import 'package:norkik_app/utils/theme_data.dart';
+import 'package:norkik_app/widget/error_widget.dart';
+import 'package:provider/provider.dart';
+
+import 'pages/home_pages/navigation_bar_home_page.dart';
+import 'providers/theme.dart';
+import 'widget/cargando_widget.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -18,74 +31,56 @@ class MyApp extends StatelessWidget {
         future: _initApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return _ErrorWidget();
+            return ErrorWidgetNorkik();
           } else if (snapshot.hasData) {
-            return AutenticacionPage();
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                    create: (_) => ThemeChanger(getNorkikTheme())),
+                ChangeNotifierProvider<AuthProvider>.value(
+                    value: AuthProvider()),
+                StreamProvider.value(
+                    value: AuthProvider().user, initialData: null),
+                ChangeNotifierProvider(
+                    create: (_) => UserProvider(UserModel.userModelNoData())),
+              ],
+              child: NorkikApp(),
+            );
           } else
-            return _CargandoWidget();
+            return CargandoWidget();
         });
   }
 }
 
-class _ErrorWidget extends StatelessWidget {
-  const _ErrorWidget({Key? key}) : super(key: key);
+class NorkikApp extends StatelessWidget {
+  const NorkikApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', 'US'), // English, no country code
+        Locale('es', 'ES'),
+      ],
+      title: 'Norkik',
+      theme: theme.getTheme(),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              FadeInImage(
-                  width: 300,
-                  fit: BoxFit.cover,
-                  placeholder: AssetImage('assets/loadingUno.gif'),
-                  image: AssetImage('assets/Norkik.png')),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                  'Lo sentimos, ocurrió un error inesperado, vuelve a intentarlo más tarde')
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CargandoWidget extends StatelessWidget {
-  const _CargandoWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              FadeInImage(
-                  fit: BoxFit.cover,
-                  width: 300,
-                  placeholder: AssetImage('assets/loadingUno.gif'),
-                  image: AssetImage('assets/Norkik.png')),
-              SizedBox(
-                height: 20,
-              ),
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Cargando...')
-            ],
-          ),
-        ),
-      ),
+      routes: getAplicationRoutes(),
+      // home: WrapPage(),
+      initialRoute: 'wrap',
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return NavigationBarHomePage();
+        });
+      },
     );
   }
 }

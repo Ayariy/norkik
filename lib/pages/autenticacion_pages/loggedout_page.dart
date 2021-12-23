@@ -1,13 +1,49 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+
+import 'package:norkik_app/pages/autenticacion_pages/loggin_page.dart';
+import 'package:norkik_app/pages/autenticacion_pages/register_page.dart';
+
 import 'package:norkik_app/widget/elevated_button.dart';
 import 'package:norkik_app/widget/outlined_button.dart';
 
-class LoggedoutPage extends StatelessWidget {
+class LoggedoutPage extends StatefulWidget {
   const LoggedoutPage({Key? key}) : super(key: key);
 
   @override
+  State<LoggedoutPage> createState() => _LoggedoutPageState();
+}
+
+class _LoggedoutPageState extends State<LoggedoutPage> {
+  Future probando() async {
+    // UserProvider userProvider = Provider.of<UserProvider>(context);
+    // UserModel user =
+    //     await userProvider.getUserById('HZhvqu0i84XY8Ykb2qMilKUdTCL2');
+    // print(user.apariencia.tema);
+    // final CollectionReference data =
+    //     FirebaseFirestore.instance.collection('Usuario');
+    // QuerySnapshot querySnapshot = await data.get();
+
+    // print(querySnapshot.docs.map((e) async {
+    //   // Map<String, dynamic> listMapUser = e.data() as Map<String, dynamic>;
+    //   // listMapUser.addAll({"idUsuario": e.id});
+    //   // DocumentReference docref = listMapUser['Privacidad'];
+    //   // DocumentSnapshot doc = await docref.get();
+    //   // Map<String, dynamic> mapPrivacidad = doc.data() as Map<String, dynamic>;
+    //   // mapPrivacidad.addAll({"idPrivacidad": doc.id});
+
+    //   // listMapUser['Privacidad'] = mapPrivacidad;
+
+    //   // UserModel user = UserModel.fromFireStore(listMapUser);
+    //   // print(e.data().toString() + "----------------------------");
+
+    //   return e.data();
+    // }));
+  }
+
+  @override
   Widget build(BuildContext context) {
+    probando();
     final size = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -62,12 +98,17 @@ class LoggedoutPage extends StatelessWidget {
                 children: [
                   OutlinedButtonNorkik(
                     textButton: 'INICIAR SESIÓN',
-                    ruta: 'loggin',
+                    functionButton: () {
+                      _showModalWidget(LogginPage());
+                      // Navigator.pushNamed(context, 'loggin');
+                    },
                   ),
                   ElevatedButtonNorkik(
-                    textButton: 'REGISTRARSE',
-                    ruta: 'register',
-                  )
+                      textButton: 'REGISTRARSE',
+                      functionButton: () {
+                        _showModalWidget(RegisterPage());
+                        // Navigator.pushNamed(context, 'loggin');
+                      })
                 ],
               ),
             ),
@@ -75,5 +116,17 @@ class LoggedoutPage extends StatelessWidget {
         ),
       ],
     ));
+  }
+
+  void _showModalWidget(Widget widgetShow) {
+    showModalBottomSheet(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return widgetShow;
+        });
   }
 }

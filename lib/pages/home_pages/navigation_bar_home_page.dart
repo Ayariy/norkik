@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:norkik_app/pages/home_pages/recordatorio_page.dart';
 import 'package:norkik_app/pages/home_pages/resumen_page.dart';
+import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
 import 'package:norkik_app/widget/navigation_drawer.dart';
+import 'package:provider/provider.dart';
 import 'calendario_page.dart';
 import 'comunidad_page.dart';
 import 'horario_page.dart';
@@ -50,6 +52,8 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    // print(userProvider.userGlobal.email);
     return Scaffold(
       appBar: AppBar(
         title: Text(pageName),
@@ -67,7 +71,9 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
         ],
         color: Theme.of(context).primaryColor,
         buttonBackgroundColor: Theme.of(context).primaryColor,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Colors.transparent
+        //  Theme.of(context).scaffoldBackgroundColor
+        ,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 300),
         onTap: (index) {

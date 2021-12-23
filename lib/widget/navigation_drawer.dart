@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:norkik_app/models/user_model.dart';
+import 'package:norkik_app/providers/autenticacion.dart';
+import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
 import 'package:norkik_app/providers/theme.dart';
 import 'package:norkik_app/utils/theme_data.dart';
 import 'package:provider/provider.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  NavigationDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,8 @@ class NavigationDrawer extends StatelessWidget {
 
   Widget _getDrawerListView(BuildContext context) {
     final themeChanger = Provider.of<ThemeChanger>(context);
+    final loginProvider = Provider.of<AuthProvider>(context);
+
     return Expanded(
         child: FadeInLeft(
       child: ListView(
@@ -51,6 +56,24 @@ class NavigationDrawer extends StatelessWidget {
           ),
           _getItemTile(
               Icons.camera_rounded, 'Herramientas', 'herramientas', context),
+          Divider(
+            color:
+                Theme.of(context).appBarTheme.foregroundColor!.withOpacity(0.5),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Theme.of(context).appBarTheme.foregroundColor,
+            ),
+            title: Text(
+              "Cerrar sesión",
+              style: TextStyle(
+                  color: Theme.of(context).appBarTheme.foregroundColor),
+            ),
+            onTap: () {
+              loginProvider.logout();
+            },
+          ),
           Divider(
               color: Theme.of(context)
                   .appBarTheme
@@ -91,6 +114,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   SizedBox _getDrawerHeader(context) {
+    final usuarioProvider = Provider.of<UserProvider>(context);
     return SizedBox(
       height: 220,
       child: FadeInDown(
@@ -99,16 +123,18 @@ class NavigationDrawer extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.transparent),
             currentAccountPicture: ClipRRect(
               borderRadius: BorderRadius.circular(50.0),
-              child: const FadeInImage(
+              child: FadeInImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png'),
+                image: _getUserImg(usuarioProvider),
                 placeholder: AssetImage('assets/loadingDos.gif'),
               ),
             ),
-            accountName: Text('Malkik Anrango'),
-            accountEmail: Text('salvadormalkik@gmail.com'),
+            accountName: Text(usuarioProvider.userGlobal.nombre +
+                ' ' +
+                usuarioProvider.userGlobal.apellido),
+            accountEmail: Text(usuarioProvider.userGlobal.email),
             onDetailsPressed: () {
+              // usuarioProvider.setUserGlobal(UserModel.userModelNoData());
               Navigator.pushNamed(context, 'perfil');
             },
           ),
@@ -150,5 +176,13 @@ class NavigationDrawer extends StatelessWidget {
         Navigator.pushNamed(context, ruta);
       },
     );
+  }
+
+  ImageProvider<Object> _getUserImg(UserProvider usuarioProvider) {
+    if (usuarioProvider.userGlobal.imgUrl == '') {
+      return AssetImage('assets/user.png');
+    } else {
+      return NetworkImage(usuarioProvider.userGlobal.imgUrl);
+    }
   }
 }

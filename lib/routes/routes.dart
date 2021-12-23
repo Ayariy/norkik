@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:norkik_app/pages/autenticacion_pages/autenticacion_page.dart';
 import 'package:norkik_app/pages/autenticacion_pages/loggedout_page.dart';
 import 'package:norkik_app/pages/autenticacion_pages/loggin_page.dart';
 import 'package:norkik_app/pages/autenticacion_pages/register_page.dart';
@@ -10,6 +11,7 @@ import 'package:norkik_app/pages/drawer_pages/notas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/perfil_page.dart';
 import 'package:norkik_app/pages/drawer_pages/tareas_page.dart';
 import 'package:norkik_app/pages/home_pages/navigation_bar_home_page.dart';
+import 'package:norkik_app/pages/wrap_page.dart';
 
 Map<String, WidgetBuilder> getAplicationRoutes() {
   return <String, WidgetBuilder>{
@@ -24,5 +26,7 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
     'loggin': (context) => (LogginPage()),
     'register': (context) => (RegisterPage()),
     'loggedout': (context) => (LoggedoutPage()),
+    'wrap': (context) => (WrapPage()),
+    'autentificacion': (context) => (AutenticacionPage())
   };
 }
