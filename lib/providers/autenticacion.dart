@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:norkik_app/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
-import 'package:provider/provider.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoading = false;

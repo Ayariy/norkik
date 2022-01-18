@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:norkik_app/models/apariencia_model.dart';
-import 'package:norkik_app/models/privacidad_model.dart';
 import 'package:norkik_app/models/user_model.dart';
 import 'package:norkik_app/providers/norkikdb_providers/apariencia_provider.dart';
 import 'package:norkik_app/providers/norkikdb_providers/privacidad_provider.dart';
@@ -78,6 +76,24 @@ class UserProvider with ChangeNotifier {
     }
     setLoading(false);
     return usuarioReturn;
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>?> getUserReferenceById(
+      String uid) async {
+    setLoading(true);
+    DocumentReference<Map<String, dynamic>>? docRef;
+    QuerySnapshot querySnapshot =
+        await usuariosRef.where('UID', isEqualTo: uid).get();
+    if (querySnapshot.size > 0) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+
+      if (documentSnapshot.exists) {
+        docRef = documentSnapshot.reference
+            as DocumentReference<Map<String, dynamic>>;
+      }
+      setLoading(false);
+      return docRef;
+    }
   }
 
   Future<UserModel> getUserByIdWithoutNotify(String uid) async {

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 class ElevatedButtonNorkik extends StatelessWidget {
   final String textButton;
-  final String? ruta;
   final Function? functionButton;
+
   ElevatedButtonNorkik({
     Key? key,
     required this.textButton,
-    this.ruta,
     this.functionButton,
   }) : super(key: key);
 

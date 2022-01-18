@@ -15,35 +15,8 @@ class LoggedoutPage extends StatefulWidget {
 }
 
 class _LoggedoutPageState extends State<LoggedoutPage> {
-  Future probando() async {
-    // UserProvider userProvider = Provider.of<UserProvider>(context);
-    // UserModel user =
-    //     await userProvider.getUserById('HZhvqu0i84XY8Ykb2qMilKUdTCL2');
-    // print(user.apariencia.tema);
-    // final CollectionReference data =
-    //     FirebaseFirestore.instance.collection('Usuario');
-    // QuerySnapshot querySnapshot = await data.get();
-
-    // print(querySnapshot.docs.map((e) async {
-    //   // Map<String, dynamic> listMapUser = e.data() as Map<String, dynamic>;
-    //   // listMapUser.addAll({"idUsuario": e.id});
-    //   // DocumentReference docref = listMapUser['Privacidad'];
-    //   // DocumentSnapshot doc = await docref.get();
-    //   // Map<String, dynamic> mapPrivacidad = doc.data() as Map<String, dynamic>;
-    //   // mapPrivacidad.addAll({"idPrivacidad": doc.id});
-
-    //   // listMapUser['Privacidad'] = mapPrivacidad;
-
-    //   // UserModel user = UserModel.fromFireStore(listMapUser);
-    //   // print(e.data().toString() + "----------------------------");
-
-    //   return e.data();
-    // }));
-  }
-
   @override
   Widget build(BuildContext context) {
-    probando();
     final size = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(

@@ -4,7 +4,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:norkik_app/models/user_model.dart';
 
 import 'package:norkik_app/providers/autenticacion.dart';
+import 'package:norkik_app/providers/conectividad.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
+import 'package:norkik_app/providers/notification.dart';
+import 'package:norkik_app/providers/storage_shared.dart';
 
 import 'package:norkik_app/routes/routes.dart';
 import 'package:norkik_app/utils/theme_data.dart';
@@ -14,10 +17,13 @@ import 'package:provider/provider.dart';
 import 'pages/home_pages/navigation_bar_home_page.dart';
 import 'providers/theme.dart';
 import 'widget/cargando_widget.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
+
   return runApp(const MyApp());
 }
 
@@ -26,6 +32,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    tz.initializeTimeZones();
     final _initApp = Firebase.initializeApp();
     return FutureBuilder(
         future: _initApp,
@@ -35,6 +42,8 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return MultiProvider(
               providers: [
+                ChangeNotifierProvider(create: (_) => ConnectionStatusModel()),
+                ChangeNotifierProvider(create: (_) => NotificationProvider()),
                 ChangeNotifierProvider(
                     create: (_) => ThemeChanger(getNorkikTheme())),
                 ChangeNotifierProvider<AuthProvider>.value(

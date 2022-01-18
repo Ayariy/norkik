@@ -1,52 +1,137 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HorarioPage extends StatelessWidget {
+class HorarioPage extends StatefulWidget {
   HorarioPage({Key? key}) : super(key: key);
 
-  // final CollectionReference data =
-  //     FirebaseFirestore.instance.collection('Administrador');
+  @override
+  State<HorarioPage> createState() => _HorarioPageState();
+}
+
+class _HorarioPageState extends State<HorarioPage> {
+  List<List<bool>> matrizBool =
+      List.generate(24, (index) => List.generate(7, (index) => false));
+  int x = 0;
+  int y = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Horario page'),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 18,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Lun'),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Mar'),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Mie'),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Jue'),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Vie'),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.zero,
+                  width: 62,
+                  child: Text('Sab'),
+                )
+              ],
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Table(
+                  columnWidths: {0: FractionColumnWidth(0.05)},
+                  border: TableBorder(
+                      verticalInside: BorderSide(width: 0.8),
+                      horizontalInside: BorderSide(width: 0.5)),
+                  children: _getTableRowList(),
+                ),
+              ),
+            ),
+          ],
         ),
-        body: Text('Mi página de horario')
-        //  _getData(),
-        );
-  }
-
-  _imprimir() {
-    // print(
-    //     'Probando------------------------------------------------------------');
-    // print(data.get().then((value) => value.docs.forEach((element) {
-    //       print('-----------------------------------------------');
-    //       print(element['email']);
-    //     })));
-  }
-
-  FutureBuilder<DocumentSnapshot> _getData() {
-    return FutureBuilder<DocumentSnapshot>(
-      // future: data.doc().get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          return Text(data.toString());
-        }
-
-        return Text("loading");
-      },
+      ),
     );
+  }
+
+  List<Widget> _getListRow(int indexRow) {
+    List<Widget> widet = [];
+    for (var i = 0; i < 7; i++) {
+      widet.add(
+        GestureDetector(
+          onTap: () {
+            if (x == indexRow && y == i) {
+              x = 0;
+              y = 0;
+            } else {
+              matrizBool[x][y] = false;
+              x = indexRow;
+              y = i;
+            }
+            setState(() {
+              matrizBool[indexRow][i] = true;
+            });
+          },
+          child: Container(
+              decoration: BoxDecoration(),
+              height: 60,
+              child: i == 0
+                  ? Text(indexRow.toString())
+                  : matrizBool[indexRow][i]
+                      ? Container(
+                          margin: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          height: 60,
+                          child: Icon(
+                            Icons.add,
+                            size: 40,
+                            color:
+                                Theme.of(context).appBarTheme.foregroundColor,
+                          ),
+                        )
+                      : SizedBox()),
+        ),
+      );
+    }
+
+    return widet;
+  }
+
+  List<TableRow> _getTableRowList() {
+    List<TableRow> widetRow = [];
+    for (var i = 0; i <= 23; i++) {
+      widetRow.add(TableRow(children: _getListRow(i)));
+    }
+    return widetRow;
   }
 }

@@ -4,7 +4,7 @@ class NoticiaModel {
   String descripcion;
   String imagen;
   DateTime fecha;
-
+  bool isFavorite = false;
   static const String collectionId = 'Noticia';
 
   NoticiaModel(
@@ -43,6 +43,6 @@ class NoticiaModel {
   @override
   String toString() {
     // TODO: implement toString
-    return 'Noticia{idNoticia: $idNoticia, titulo: $titulo, descripcion: $descripcion, imagen: $imagen, fecha: $fecha}';
+    return 'Noticia{idNoticia: $idNoticia, titulo: $titulo, descripcion: $descripcion, imagen: $imagen, fecha: $fecha, Favorite: $isFavorite}';
   }
 }

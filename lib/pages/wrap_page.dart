@@ -5,9 +5,12 @@ import 'package:norkik_app/models/user_model.dart';
 import 'package:norkik_app/pages/autenticacion_pages/loggedout_page.dart';
 
 import 'package:norkik_app/pages/home_pages/navigation_bar_home_page.dart';
+import 'package:norkik_app/providers/conectividad.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
+import 'package:norkik_app/providers/notification.dart';
 import 'package:norkik_app/widget/cargando_widget.dart';
 import 'package:norkik_app/widget/error_widget.dart';
+import 'package:norkik_app/widget/nointernet_widget.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,7 +26,8 @@ class _WrapPageState extends State<WrapPage> {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
     final usuarioProvider = Provider.of<UserProvider>(context);
-    // print(Theme.of(context).primaryTextTheme.bodyText1!.fontSize.toString());
+    ConnectionStatusModel conection =
+        Provider.of<ConnectionStatusModel>(context);
     if (user != null) {
       // _getUserGlobal(usuarioProvider, user.uid);
       return WillPopScope(
@@ -34,11 +38,20 @@ class _WrapPageState extends State<WrapPage> {
               if (snapshot.hasData) {
                 UserModel userModel = snapshot.data as UserModel;
                 usuarioProvider.setUserGlobalWithoutNotify(userModel);
-                return NavigationBarHomePage();
+                Provider.of<NotificationProvider>(context, listen: false)
+                    .initialize(context);
+
+                return conection.isOnline
+                    ? NavigationBarHomePage()
+                    : NoInternetWidget();
               } else if (snapshot.hasError)
                 return ErrorWidgetNorkik();
-              else {
-                return CargandoWidget();
+              else if (ConnectionState.none == snapshot.connectionState) {
+                return NoInternetWidget();
+              } else {
+                return conection.isOnline
+                    ? CargandoWidget()
+                    : NoInternetWidget();
               }
             },
           ));

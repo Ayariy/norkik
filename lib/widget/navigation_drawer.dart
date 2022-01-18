@@ -1,8 +1,7 @@
-import 'dart:ui';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:norkik_app/models/user_model.dart';
+
 import 'package:norkik_app/providers/autenticacion.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
 import 'package:norkik_app/providers/theme.dart';
@@ -138,16 +137,6 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.pushNamed(context, 'perfil');
             },
           ),
-          // FadeInImage(
-          //     fit: BoxFit.fill,
-          //     placeholder: AssetImage('assets/loadingUno.gif'),
-          //     image: NetworkImage(
-          //         'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png')),
-
-          //     CircleAvatar(
-          //   backgroundImage: NetworkImage(
-          //       'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png'),
-          // ),
           decoration: const BoxDecoration(
             image: DecorationImage(
                 colorFilter:
@@ -179,10 +168,11 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   ImageProvider<Object> _getUserImg(UserProvider usuarioProvider) {
-    if (usuarioProvider.userGlobal.imgUrl == '') {
+    if (usuarioProvider.userGlobal.imgUrl == '' ||
+        usuarioProvider.userGlobal.imgUrl == 'no-img') {
       return AssetImage('assets/user.png');
     } else {
-      return NetworkImage(usuarioProvider.userGlobal.imgUrl);
+      return CachedNetworkImageProvider(usuarioProvider.userGlobal.imgUrl);
     }
   }
 }
