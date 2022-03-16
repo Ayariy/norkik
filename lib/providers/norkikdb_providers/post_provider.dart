@@ -50,6 +50,53 @@ class PostProvider {
     await reference.delete();
   }
 
+  Future<List<Future<PostModel>>> getPostByUser(
+      DateTime? from, DocumentReference user) async {
+    QuerySnapshot querySnapshot;
+    if (from != null) {
+      querySnapshot = await postRef
+          .orderBy('Fecha', descending: true)
+          .startAfter([from])
+          .limit(10)
+          .where('Usuario', isEqualTo: user)
+          .get();
+    } else {
+      querySnapshot = await postRef
+          .orderBy('Fecha', descending: true)
+          .limit(3)
+          .where('Usuario', isEqualTo: user)
+          .get();
+    }
+
+    return querySnapshot.docs.map((elementPost) async {
+      Map<String, dynamic> postMap = elementPost.data() as Map<String, dynamic>;
+      postMap.addAll({'idPost': elementPost.id});
+
+      DocumentReference userRef = postMap['Usuario'];
+      DocumentSnapshot userDoc = await userRef.get();
+      Map<String, dynamic> mapUser = userDoc.data() as Map<String, dynamic>;
+
+      DocumentReference privacidadRef = mapUser['Privacidad'];
+      DocumentReference aparienciaRef = mapUser['Apariencia'];
+
+      DocumentSnapshot privacidadDoc = await privacidadRef.get();
+      DocumentSnapshot aparienciaDoc = await aparienciaRef.get();
+
+      Map<String, dynamic> mapPrivacidad =
+          privacidadDoc.data() as Map<String, dynamic>;
+      Map<String, dynamic> mapApariencia =
+          aparienciaDoc.data() as Map<String, dynamic>;
+
+      mapPrivacidad.addAll({'idPrivacidad': privacidadDoc.id});
+      mapApariencia.addAll({'idApariencia': aparienciaDoc.id});
+
+      mapUser['Privacidad'] = mapPrivacidad;
+      mapUser['Apariencia'] = mapApariencia;
+
+      return PostModel.fromFireStore(postMap, UserModel.fromFireStore(mapUser));
+    }).toList();
+  }
+
   Future<List<Future<PostModel>>> getPostByTitle(String title) async {
     QuerySnapshot querySnapshot = await postRef
         .where('Titulo', isGreaterThanOrEqualTo: title)

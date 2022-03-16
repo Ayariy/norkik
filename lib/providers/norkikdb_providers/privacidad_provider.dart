@@ -10,4 +10,18 @@ class PrivacidadProvider {
   ) async {
     return await privacidadRef.add(privacidad.toMap());
   }
+
+  Future<DocumentReference<Map<String, dynamic>>?> getReferencePrivacidadById(
+      String idPrivacidad) async {
+    DocumentReference<Map<String, dynamic>>? docRef;
+    DocumentSnapshot documentSnapshot =
+        await privacidadRef.doc(idPrivacidad).get();
+
+    if (documentSnapshot.exists) {
+      docRef =
+          documentSnapshot.reference as DocumentReference<Map<String, dynamic>>;
+    }
+
+    return docRef;
+  }
 }

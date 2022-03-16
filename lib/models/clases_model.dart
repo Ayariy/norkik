@@ -4,9 +4,12 @@ import 'package:norkik_app/models/horario_model.dart';
 
 class ClasesModel {
   String idClase;
-  List<Map<String, dynamic>> fechaInicioFin;
+  // List<Map<String, dynamic>> fechaInicioFin;
+  List<dynamic> fechaInicioFin;
   HorarioModel horario;
   AsignaturaModel asignatura;
+
+  static const String collectionId = 'Clases';
 
   ClasesModel(
       {required this.idClase,
@@ -30,7 +33,13 @@ class ClasesModel {
         'Asignatura': docRefAsignatura,
         'Horario': docRefHorario
       };
-
+  factory ClasesModel.clasesModelNoData() {
+    return ClasesModel(
+        idClase: 'no-id',
+        fechaInicioFin: [],
+        horario: HorarioModel.horarioModelNoData(),
+        asignatura: AsignaturaModel.asignaturaModelNoData());
+  }
   @override
   String toString() {
     return 'Clases{idClase: $idClase, FechaInicioFin: $fechaInicioFin, asignatura: $asignatura, Horario:$horario}';

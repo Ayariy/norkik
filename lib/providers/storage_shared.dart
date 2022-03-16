@@ -50,4 +50,28 @@ class StorageShared {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('listRecordatorios');
   }
+
+  ///COLORES ASIGNATURAS
+  ///
+  agregarColoresAsignaturaList(Map<String, dynamic> listColor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String mapColor = jsonEncode(listColor);
+    await prefs.setString('mapColor', mapColor);
+  }
+
+  Future<Map<String, dynamic>> obtenerColoresAsignaturaList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String mapColorString = prefs.getString('mapColor') ?? '';
+    if (mapColorString != '') {
+      Map<String, dynamic> mapColor = jsonDecode(mapColorString);
+      return mapColor;
+    } else {
+      return {};
+    }
+  }
+
+  eliminarColoresAsignaturaList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('mapColor');
+  }
 }

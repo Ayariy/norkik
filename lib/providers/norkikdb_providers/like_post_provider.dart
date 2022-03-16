@@ -86,6 +86,29 @@ class LikePostProvider {
     return LikePostModel.fromFireStore(likePostMap);
   }
 
+  Future<LikePostModel> getLikePostByPostId(PostModel postModel) async {
+    LikePostModel likePostModelReturn = LikePostModel.likePostNoData();
+    PostProvider postProvider = PostProvider();
+    QuerySnapshot querySnapshot = await likePostRef
+        .where('Post',
+            isEqualTo:
+                (await postProvider.getPostReferenceById(postModel.idPost)))
+        .get();
+
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> likePostMap =
+          documentSnapshot.data() as Map<String, dynamic>;
+
+      likePostMap.addAll({'idLikePost': documentSnapshot.id});
+      likePostMap['Post'] = postModel;
+      likePostModelReturn = LikePostModel.fromFireStore(likePostMap);
+      return likePostModelReturn;
+    }
+
+    return likePostModelReturn;
+  }
+
   Future<void> deleteLikePostById(String idLikePost, String idPost) async {
     await likePostRef.doc(idLikePost).delete().then((value) {
       PostProvider postProvider = PostProvider();

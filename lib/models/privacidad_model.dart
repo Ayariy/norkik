@@ -1,11 +1,11 @@
 class PrivacidadModel {
-  String? idPrivacidad;
+  String idPrivacidad;
   bool whatsapp;
   bool apodo;
   bool email;
   static const String collectionId = 'Privacidad';
   PrivacidadModel(
-      {this.idPrivacidad,
+      {required this.idPrivacidad,
       required this.whatsapp,
       required this.apodo,
       required this.email});

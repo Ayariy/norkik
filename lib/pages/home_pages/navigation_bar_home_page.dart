@@ -22,7 +22,7 @@ class NavigationBarHomePage extends StatefulWidget {
 }
 
 class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
-  int _pageIndex = 4;
+  int _pageIndex = 5;
   String pageName = '';
 
   @override
@@ -128,6 +128,13 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
     );
   }
 
+  showPageNavigator(int indexPage) {
+    setState(() {
+      _pageIndex = indexPage;
+      metodoAppBarName();
+    });
+  }
+
   Widget _iconoItem(IconData icon, context) {
     // print(getNorkikTheme().appBarTheme.foregroundColor);
     // print(getDarkTheme().appBarTheme.foregroundColor);
@@ -138,7 +145,10 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
   Widget _getPageIndex() {
     switch (_pageIndex) {
       case 0:
-        return ResumenPage(pageName: 'Resumen');
+        return ResumenPage(
+          pageName: 'Resumen',
+          setIndexPageNavigator: showPageNavigator,
+        );
       case 1:
         return NoticiasPage();
       case 2:
@@ -148,9 +158,13 @@ class _NavigationBarHomePageState extends State<NavigationBarHomePage> {
       case 4:
         return HorarioPage();
       case 5:
-        return CalendarioPage();
+        return CalendarioPage(
+          funtionIndexPage: showPageNavigator,
+        );
       default:
-        return ResumenPage();
+        return ResumenPage(
+          setIndexPageNavigator: showPageNavigator,
+        );
     }
   }
 

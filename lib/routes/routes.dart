@@ -5,12 +5,26 @@ import 'package:norkik_app/pages/autenticacion_pages/loggin_page.dart';
 import 'package:norkik_app/pages/autenticacion_pages/register_page.dart';
 import 'package:norkik_app/pages/drawer_pages/asignaturas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/configuracion_page.dart';
+import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_imagen_page.dart';
+import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_sonido_page.dart';
+import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_texto_page.dart';
 import 'package:norkik_app/pages/drawer_pages/docentes_page.dart';
 import 'package:norkik_app/pages/drawer_pages/herramientas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/notas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/perfil_page.dart';
+import 'package:norkik_app/pages/drawer_pages/perfil_pages/editar_perfil_page.dart';
 import 'package:norkik_app/pages/drawer_pages/tareas_page.dart';
+import 'package:norkik_app/pages/home_pages/asignatura_pages/crear_asignatura_page.dart';
+import 'package:norkik_app/pages/home_pages/asignatura_pages/ver_asignatura_page.dart';
 import 'package:norkik_app/pages/home_pages/comunidad_pages/crear_post_page.dart';
+import 'package:norkik_app/pages/home_pages/docente_pages/crear_docente_page.dart';
+import 'package:norkik_app/pages/home_pages/docente_pages/ver_docente_page.dart';
+import 'package:norkik_app/pages/home_pages/horario_page.dart';
+import 'package:norkik_app/pages/home_pages/horario_pages/crear_clase_page.dart';
+import 'package:norkik_app/pages/home_pages/horario_pages/crear_horario_page.dart';
+import 'package:norkik_app/pages/home_pages/horario_pages/editar_clase.dart';
+import 'package:norkik_app/pages/home_pages/horario_pages/editar_horario_page.dart';
+import 'package:norkik_app/pages/home_pages/horario_pages/gestionar_horario_page.dart';
 import 'package:norkik_app/pages/home_pages/navigation_bar_home_page.dart';
 import 'package:norkik_app/pages/home_pages/noticias_page/noticia_page.dart';
 import 'package:norkik_app/pages/home_pages/noticias_page/noticias_favoritos_page.dart';
@@ -44,6 +58,29 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
     //RECORDATORIO PAGES
     'crearRecordatorio': (context) => CrearRecordatorio(),
     'verRecordatorio': (context) => VerRecordatorio(),
-    'editarRecordatorio': (context) => EditarRecordatorio()
+    'editarRecordatorio': (context) => EditarRecordatorio(),
+    //HORARIO PAGES
+    'crearClase': (context) => CrearClase(),
+    'editarClase': (context) => EditarClase(),
+    'gestionarHorario': (context) => GestionarHorarios(),
+    'crearHorario': (context) => CrearHorario(),
+    'editarHorario': (context) => EditarHorario(),
+    //ASIGNATURA PAGES
+    'crearAsignatura': (context) => CrearAsignatura(),
+    'verAsignatura': (context) => VerAsignatura(),
+    //DOCENTES PAGES
+    'crearDocente': (context) => CrearDocente(),
+    'verDocente': (context) => VerDocente(),
+
+    //PAGES MENUBOTTOM
+    //CUADERNO DIGITAL PAGES
+    'crearNotaTexto': (context) => CrearNotaTexto(),
+    'crearNotaSonido': (context) => CrearNotaSonido(),
+    'crearNotaImg': (context) => CrearImgPage(),
+    //HORARIO
+    'horario': (context) => HorarioPage(),
+
+    //USUARIO
+    'editUser': (context) => EditarUsuarioPage(),
   };
 }

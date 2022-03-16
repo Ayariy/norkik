@@ -10,4 +10,18 @@ class AparienciaProvider {
   ) async {
     return await aparienciaRef.add(apariencia.toMap());
   }
+
+  Future<DocumentReference<Map<String, dynamic>>?> getReferenceAparienciaById(
+      String idApariencia) async {
+    DocumentReference<Map<String, dynamic>>? docRef;
+    DocumentSnapshot documentSnapshot =
+        await aparienciaRef.doc(idApariencia).get();
+
+    if (documentSnapshot.exists) {
+      docRef =
+          documentSnapshot.reference as DocumentReference<Map<String, dynamic>>;
+    }
+
+    return docRef;
+  }
 }

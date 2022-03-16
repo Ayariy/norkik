@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:norkik_app/models/user_model.dart';
 import 'package:norkik_app/providers/norkikdb_providers/apariencia_provider.dart';
 import 'package:norkik_app/providers/norkikdb_providers/privacidad_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UserProvider with ChangeNotifier {
   CollectionReference usuariosRef =
@@ -43,6 +46,22 @@ class UserProvider with ChangeNotifier {
     setLoading(false);
   }
 
+  Future<void> updateUser(
+      UserModel user,
+      DocumentReference<Map<String, dynamic>> privacidadRef,
+      DocumentReference<Map<String, dynamic>> aparienciaRef) async {
+    QuerySnapshot querySnapshot =
+        await usuariosRef.where('UID', isEqualTo: user.idUsuario).get();
+    if (querySnapshot.size > 0) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      if (documentSnapshot.exists) {
+        await usuariosRef
+            .doc(documentSnapshot.id)
+            .update(user.toMap(privacidadRef, aparienciaRef));
+      }
+    }
+  }
+
   Future<UserModel> getUserById(String uid) async {
     setLoading(true);
     UserModel usuarioReturn = UserModel.userModelNoData();
@@ -80,7 +99,6 @@ class UserProvider with ChangeNotifier {
 
   Future<DocumentReference<Map<String, dynamic>>?> getUserReferenceById(
       String uid) async {
-    setLoading(true);
     DocumentReference<Map<String, dynamic>>? docRef;
     QuerySnapshot querySnapshot =
         await usuariosRef.where('UID', isEqualTo: uid).get();
@@ -91,7 +109,7 @@ class UserProvider with ChangeNotifier {
         docRef = documentSnapshot.reference
             as DocumentReference<Map<String, dynamic>>;
       }
-      setLoading(false);
+
       return docRef;
     }
   }
@@ -127,5 +145,32 @@ class UserProvider with ChangeNotifier {
       }
     }
     return usuarioReturn;
+  }
+
+  Future<String> uploadFile(String userId, String nameFile, File file) async {
+    firebase_storage.Reference postFileRef = firebase_storage
+        .FirebaseStorage.instance
+        .ref('Usuarios')
+        .child('Perfil')
+        .child(userId);
+
+    final firebase_storage.UploadTask task =
+        postFileRef.child(nameFile).putFile(file);
+
+    String fileUrl = '';
+    fileUrl = await (await task).ref.getDownloadURL();
+
+    task.snapshotEvents.listen((event) async {
+      if (event.state == firebase_storage.TaskState.error) {
+        await task.cancel();
+      }
+    });
+    return fileUrl;
+  }
+
+  deleteFilePerfil(String urlFile) async {
+    firebase_storage.Reference reference =
+        firebase_storage.FirebaseStorage.instance.refFromURL(urlFile);
+    await reference.delete();
   }
 }

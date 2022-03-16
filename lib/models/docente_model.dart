@@ -3,40 +3,39 @@ class DocenteModel {
   String nombre;
   String apellido;
   String email;
-  String foto;
 
   static const String collectionId = 'Docentes';
 
-  DocenteModel(
-      {required this.idDocente,
-      required this.nombre,
-      required this.apellido,
-      required this.email,
-      required this.foto});
+  DocenteModel({
+    required this.idDocente,
+    required this.nombre,
+    required this.apellido,
+    required this.email,
+  });
 
   factory DocenteModel.fromFireStore(Map<String, dynamic> mapDocente) {
     return DocenteModel(
-        idDocente: mapDocente['idDocente'],
-        nombre: mapDocente['Nombre'],
-        apellido: mapDocente['Apellido'],
-        email: mapDocente['Email'],
-        foto: mapDocente['Foto']);
+      idDocente: mapDocente['idDocente'],
+      nombre: mapDocente['Nombre'],
+      apellido: mapDocente['Apellido'],
+      email: mapDocente['Email'],
+    );
   }
 
   Map<String, dynamic> toMap() =>
-      {'Nombre': nombre, 'Apellido': apellido, 'Email': email, 'Foto': foto};
+      {'Nombre': nombre, 'Apellido': apellido, 'Email': email};
 
   factory DocenteModel.docenteModelNoData() {
     return DocenteModel(
-        idDocente: 'no-id',
-        nombre: 'no-nombre',
-        apellido: 'no-apellido',
-        email: 'no-email',
-        foto: 'no-foto');
+      idDocente: 'no-id',
+      nombre: 'no-nombre',
+      apellido: 'no-apellido',
+      email: 'no-email',
+    );
   }
 
   @override
   String toString() {
-    return 'DocenteModel{idDocente: $idDocente, nombre: $idDocente, apellido: $apellido, email: $email, foto: $foto}';
+    return 'DocenteModel{idDocente: $idDocente, nombre: $idDocente, apellido: $apellido, email: $email}';
   }
 }

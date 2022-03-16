@@ -146,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Porfavor ingrese su contraseña';
+                      return 'Porfavor ingrese su correo';
                     } else if (value.contains('@') &&
                         value.contains('.') &&
                         value.endsWith('.com')) {

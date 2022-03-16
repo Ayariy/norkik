@@ -49,17 +49,12 @@ class _LoggedoutPageState extends State<LoggedoutPage> {
                 ],
               ),
             ),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'home');
-              },
-              child: FadeInImage(
-                  width: size.height * 0.37,
-                  height: size.height * 0.37,
-                  fit: BoxFit.contain,
-                  placeholder: AssetImage('assets/loadingUno.gif'),
-                  image: AssetImage('assets/Norkik.png')),
-            )),
+            child: FadeInImage(
+                width: size.height * 0.37,
+                height: size.height * 0.37,
+                fit: BoxFit.contain,
+                placeholder: AssetImage('assets/loadingUno.gif'),
+                image: AssetImage('assets/Norkik.png'))),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

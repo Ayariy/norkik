@@ -79,6 +79,7 @@ class _CrearRecordatorioState extends State<CrearRecordatorio> {
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.date_range),
                 hintText: 'Agregar una fecha',
+                suffixIcon: Icon(Icons.arrow_forward_ios_rounded),
               ),
               onTap: () {
                 // FocusScope.of(context).requestFocus(new FocusNode());
@@ -122,42 +123,45 @@ class _CrearRecordatorioState extends State<CrearRecordatorio> {
               textColor: Theme.of(context).appBarTheme.foregroundColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  String idNotification = Uuid().v1();
-                  int hashCodeId = idNotification.hashCode;
-                  StorageShared storageShared = StorageShared();
-                  List<RecordatorioModel> listRecord =
-                      await storageShared.obtenerRecordatoriosStorageList();
-                  bool val = await notificationProvider.timeNotification(
-                      hashCodeId,
-                      _tituloPostController.text,
-                      _descripcionPostController.text,
-                      DateTime.parse(_fecha),
-                      'recordatorios');
-                  if (val) {
-                    RecordatorioModel recordatorioModel = RecordatorioModel(
-                        id: hashCodeId.toString(),
-                        nombre: _tituloPostController.text,
-                        descripcion: _descripcionPostController.text,
-                        fecha: DateTime.parse(_fecha));
-                    listRecord.add(recordatorioModel);
-                    await storageShared
-                        .agregarRecordatoriosStorageList(listRecord);
-                  } else {
-                    getAlert(context, 'Alerta Recordatorio',
-                        'Lamentablemente no pudimos procesar tu petición');
-                  }
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        String idNotification = Uuid().v1();
+                        int hashCodeId = idNotification.hashCode;
+                        StorageShared storageShared = StorageShared();
+                        List<RecordatorioModel> listRecord = await storageShared
+                            .obtenerRecordatoriosStorageList();
+                        bool val = await notificationProvider.timeNotification(
+                            hashCodeId,
+                            _tituloPostController.text,
+                            _descripcionPostController.text,
+                            DateTime.parse(_fecha),
+                            'recordatorios');
+                        if (val) {
+                          RecordatorioModel recordatorioModel =
+                              RecordatorioModel(
+                                  id: hashCodeId.toString(),
+                                  nombre: _tituloPostController.text,
+                                  descripcion: _descripcionPostController.text,
+                                  fecha: DateTime.parse(_fecha));
+                          listRecord.add(recordatorioModel);
+                          await storageShared
+                              .agregarRecordatoriosStorageList(listRecord);
+                        } else {
+                          getAlert(context, 'Alerta Recordatorio',
+                              'Lamentablemente no pudimos procesar tu petición');
+                        }
 
-                  setState(() {
-                    isLoading = false;
-                  });
-                  Navigator.pop(context);
-                }
-              },
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Navigator.pop(context);
+                      }
+                    },
             ),
           ],
         ));

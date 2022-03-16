@@ -7,6 +7,7 @@ class HorarioModel {
   String descripcion;
   DateTime fecha;
   UserModel usuario;
+  bool activo;
 
   static const String collectionId = 'Horarios';
 
@@ -15,7 +16,8 @@ class HorarioModel {
       required this.nombre,
       required this.descripcion,
       required this.fecha,
-      required this.usuario});
+      required this.usuario,
+      required this.activo});
 
   factory HorarioModel.fromFireStore(Map<String, dynamic> mapHorario) {
     return HorarioModel(
@@ -23,6 +25,7 @@ class HorarioModel {
       nombre: mapHorario['Nombre'],
       descripcion: mapHorario['Descripcion'],
       fecha: mapHorario['Fecha'].toDate(),
+      activo: mapHorario['activo'],
       usuario: UserModel.fromFireStore(mapHorario['Usuario']),
     );
   }
@@ -33,6 +36,7 @@ class HorarioModel {
         'Nombre': nombre,
         'Descripcion': descripcion,
         'Fecha': fecha,
+        'activo': activo,
         'Usuario': documentReferenceUser
       };
 
@@ -42,11 +46,12 @@ class HorarioModel {
         nombre: 'no-name',
         descripcion: 'no-description',
         fecha: DateTime.now(),
+        activo: false,
         usuario: UserModel.userModelNoData());
   }
 
   @override
   String toString() {
-    return 'HorarioModel{id: $idHorario, nombre: $nombre, descripción: $descripcion, fecha: $fecha, usuarioId: ${usuario.idUsuario} }';
+    return 'HorarioModel{id: $idHorario, nombre: $nombre, descripción: $descripcion, fecha: $fecha, activo: $activo usuarioId: ${usuario.idUsuario} }';
   }
 }

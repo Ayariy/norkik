@@ -84,13 +84,6 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
         onPressed: () async {
           Navigator.pushNamed(context, 'crearRecordatorio')
               .then((value) => _getListRecordatorios());
-          // RecordatorioModel recordModel = RecordatorioModel(
-          //     id: '1',
-          //     nombre: 'examen',
-          //     descripcion: 'malkik descripcion',
-          //     fecha: DateTime.now());
-          // StorageShared storageShared = StorageShared();
-          // await storageShared.agregarRecordatoriosStorageList(recordModel);
         },
         child: Icon(Icons.add),
       ),
@@ -362,7 +355,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
 
   Widget _crearDropdown() {
     return Container(
-      decoration: BoxDecoration(boxShadow: [
+      decoration: BoxDecoration(boxShadow: const [
         BoxShadow(
             color: Colors.black26,
             blurRadius: 5.0,
@@ -443,7 +436,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
   void _showModalWidget(RecordatorioModel recordatorioModel) {
     NotificationProvider notificationProvider =
         Provider.of<NotificationProvider>(context, listen: false);
-    print(recordatorioModel);
+
     showModalBottomSheet(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
@@ -465,7 +458,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Editar publicación')
+                      Text('Editar Recordatorio')
                     ],
                   ),
                   onPressed: () {

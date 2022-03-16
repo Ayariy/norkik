@@ -6,15 +6,16 @@ class AsignaturaModel {
   String nombre;
   String descripcion;
   String salon;
-  String color;
+
   DocenteModel docente;
+
+  static const String collectionId = 'Asignaturas';
 
   AsignaturaModel(
       {required this.idAsignatura,
       required this.nombre,
       required this.descripcion,
       required this.salon,
-      required this.color,
       required this.docente});
 
   factory AsignaturaModel.fromFireStore(Map<String, dynamic> mapAsignatura) {
@@ -23,8 +24,7 @@ class AsignaturaModel {
         nombre: mapAsignatura['Nombre'],
         descripcion: mapAsignatura['Descripcion'],
         salon: mapAsignatura['Salon'],
-        color: mapAsignatura['Color'],
-        docente: mapAsignatura['Docente']);
+        docente: DocenteModel.fromFireStore(mapAsignatura['Docente']));
   }
 
   Map<String, dynamic> toMap(
@@ -33,7 +33,6 @@ class AsignaturaModel {
         'Nombre': nombre,
         'Descripcion': descripcion,
         'Salon': salon,
-        'Color': color,
         'Docente': documentReferenceDocente
       };
 
@@ -43,12 +42,11 @@ class AsignaturaModel {
         nombre: 'no-name',
         descripcion: 'no-descripcion',
         salon: 'no-salon',
-        color: 'no-color',
         docente: DocenteModel.docenteModelNoData());
   }
 
   @override
   String toString() {
-    return 'AsignaturaMode{idAsignatura: $idAsignatura, nomnbre: $nombre, descripcion: $descripcion, salon: $salon, color: $color, docente: $docente }';
+    return 'AsignaturaMode{idAsignatura: $idAsignatura, nomnbre: $nombre, descripcion: $descripcion, salon: $salon, docente: $docente }';
   }
 }
