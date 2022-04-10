@@ -72,9 +72,8 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
           children: [
             TextFormField(
               controller: _nombreController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese el nombre de la tarea',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingresa el nombre de la tarea',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.home_work),
                 hintText: 'Nombre de la tarea',
@@ -86,7 +85,7 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
               controller: _descripcionController,
               validator: (value) => value!.isNotEmpty
                   ? null
-                  : 'Porfavor ingrese una descripcion a la tarea',
+                  : 'Ingrese una descripción a la tarea',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.description),
                 hintText: 'Descripción de la tarea',
@@ -108,7 +107,7 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
                     return 'La fecha debe ser mayor a la actual';
                   }
                 } else {
-                  return 'Porfavor ingrese la fecha';
+                  return 'Ingresa la fecha';
                 }
               },
               decoration: const InputDecoration(
@@ -238,7 +237,7 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
                             Navigator.pop(context);
                           } else {
                             getAlert(context, 'Alerta',
-                                'Ocurrió un problema, intentelo más tarde');
+                                'Ocurrió un problema, inténtalo más tarde');
                           }
                         }
                       })

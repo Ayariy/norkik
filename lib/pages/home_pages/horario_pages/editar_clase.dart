@@ -121,7 +121,7 @@ class _EditarClaseState extends State<EditarClase> {
                     return 'La hora inicio debe ser menor a la hora fin';
                   }
                 } else {
-                  return 'Porfavor ingrese la hora de inicio';
+                  return 'Ingresa la hora de inicio';
                 }
               },
               decoration: InputDecoration(
@@ -155,7 +155,7 @@ class _EditarClaseState extends State<EditarClase> {
                     return 'La hora inicio debe ser menor a la hora fin';
                   }
                 } else {
-                  return 'Porfavor ingrese la hora de finalización';
+                  return 'Ingresa la hora de finalización';
                 }
               },
               decoration: InputDecoration(
@@ -290,7 +290,7 @@ class _EditarClaseState extends State<EditarClase> {
                             });
                           } else {
                             getAlert(context, 'Error en la ejecución',
-                                'No se pudo completar su petición, intentelo más tarde');
+                                'No se pudo completar su petición, inténtalo más tarde');
                           }
                         }
                       })
@@ -333,7 +333,7 @@ class _EditarClaseState extends State<EditarClase> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Pick a color!'),
+          title: const Text('Selecciona un color'),
           content: SingleChildScrollView(
             child: MaterialPicker(
               pickerColor: pickerColor,

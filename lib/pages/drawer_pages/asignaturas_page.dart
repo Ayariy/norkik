@@ -77,7 +77,7 @@ class _AsignaturasPageState extends State<AsignaturasPage> {
             )
           : listAsignatura.isEmpty
               ? Center(
-                  child: Text('Aún no existe registros de asignaturas'),
+                  child: Text('Aún no existen registros de asignaturas'),
                 )
               : RefreshIndicator(
                   onRefresh: _getListAsignatura,

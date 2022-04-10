@@ -87,7 +87,7 @@ class _CalendarioPageState extends State<CalendarioPage> {
               // bottomBarTextStyle: TextStyle(color: Colors.purple),
               hideBottomBar: false,
               hideArrows: false,
-              weekDays: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+              weekDays: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
               eventListBuilder: (context, events) {
                 return events.isEmpty
                     ? Expanded(

@@ -80,7 +80,7 @@ class _CrearClaseState extends State<CrearClase> {
               enableInteractiveSelection: false,
               controller: _asignaturaController,
               validator: (value) =>
-                  value!.isNotEmpty ? null : 'Porfavor ingrese la asignatura',
+                  value!.isNotEmpty ? null : 'Ingresa la asignatura',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.class_),
                 hintText: 'Selecciona una asignatura',
@@ -111,8 +111,9 @@ class _CrearClaseState extends State<CrearClase> {
             ),
             ListTile(
               leading: Icon(Icons.view_week),
-              title:
-                  Text(listTime.isEmpty ? 'No día' : getDayName(listTime[1])),
+              title: Text(listTime.isEmpty
+                  ? 'Día sin seleccionar'
+                  : getDayName(listTime[1])),
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 10),
@@ -141,10 +142,10 @@ class _CrearClaseState extends State<CrearClase> {
                     return 'La hora inicio debe ser menor a la hora fin';
                   }
                 } else {
-                  return 'Porfavor ingrese la hora de inicio';
+                  return 'Ingresa la hora de inicio';
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   prefixIcon: Text('Inicio:'),
                   hintText: 'Selecciona la hora inicial',
                   icon: Icon(Icons.timelapse)),
@@ -152,7 +153,7 @@ class _CrearClaseState extends State<CrearClase> {
                 _showPickerTimeInicio();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -178,7 +179,7 @@ class _CrearClaseState extends State<CrearClase> {
                   return 'Porfavor ingrese la hora de finalización';
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Text('Fin'),
                 hintText: 'Selecciona la hora final',
                 icon: Icon(Icons.timelapse),
@@ -207,8 +208,8 @@ class _CrearClaseState extends State<CrearClase> {
                 children: isLoading
                     ? [const CircularProgressIndicator()]
                     : [
-                        Icon(Icons.class_),
-                        SizedBox(
+                        const Icon(Icons.class_),
+                        const SizedBox(
                           width: 15,
                         ),
                         Text('Crear clase'),
@@ -366,7 +367,7 @@ class _CrearClaseState extends State<CrearClase> {
                           });
                         } else {
                           getAlert(context, 'Error en la ejecución',
-                              'No se pudo completar su petición, intentelo más tarde');
+                              'No se pudo completar su petición, inténtalo más tarde');
                         }
                       }
                     },
@@ -479,12 +480,12 @@ class _CrearClaseState extends State<CrearClase> {
             // contentPadding: EdgeInsets.fromLTRB(24, 20, 24, 0),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title: Text('Asignatura a selecionar'),
+            title: const Text('Asignatura a selecionar'),
             children: [
               ListTile(
-                leading: Icon(Icons.add),
-                trailing: Icon(Icons.class_),
-                title: Text('Crear Asignatura'),
+                leading: const Icon(Icons.add),
+                trailing: const Icon(Icons.class_),
+                title: const Text('Crear Asignatura'),
                 onTap: () {
                   Navigator.pushNamed(context, 'crearAsignatura')
                       .then((value) => Navigator.pop(context));
@@ -510,7 +511,7 @@ class _CrearClaseState extends State<CrearClase> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Pick a color!'),
+          title: const Text('Selecciona un color'),
           content: SingleChildScrollView(
             child: MaterialPicker(
               pickerColor: pickerColor,

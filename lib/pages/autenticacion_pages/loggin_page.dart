@@ -53,7 +53,7 @@ class _LogginPageState extends State<LogginPage> {
                       padding: EdgeInsets.symmetric(vertical: 5),
                       child: Divider()),
                   Text(
-                    'Hola, ¡Hás vuelto!',
+                    'Hola, ¡Has vuelto!',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -62,31 +62,31 @@ class _LogginPageState extends State<LogginPage> {
                   Text(
                     'Llena los siguientes campos para inciar sesión',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
-                        value!.isNotEmpty ? null : 'Porfavor ingrese su correo',
+                        value!.isNotEmpty ? null : 'Ingresa tu correo',
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.email),
-                        hintText: 'Email',
+                        hintText: 'Correo',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
                     controller: _passwordController,
                     validator: (value) => value!.isNotEmpty
                         ? null
-                        : 'Porfavor ingrese correctamente su contraseña',
+                        : 'Ingresa correctamente tu contraseña',
                     obscureText: true,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.vpn_key),
+                        prefixIcon: const Icon(Icons.vpn_key),
                         hintText: 'Contraseña',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),

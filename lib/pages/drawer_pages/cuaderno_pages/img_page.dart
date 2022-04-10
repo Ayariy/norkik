@@ -119,7 +119,7 @@ class ImagenPageState extends State<ImagenPage> with TickerProviderStateMixin {
               : listNotas.isEmpty
                   ? Expanded(
                       child: Center(
-                          child: Text('No hay notas de imagen, para ' +
+                          child: Text('No hay fotos, para ' +
                               widget.asignaturaModel.nombre)))
                   : Expanded(
                       child: RefreshIndicator(
@@ -154,7 +154,7 @@ class ImagenPageState extends State<ImagenPage> with TickerProviderStateMixin {
               }),
           SpeedDialChild(
               label: isSearch
-                  ? '¿Ocultar campo de busqueda?'
+                  ? '¿Ocultar campo de búsqueda?'
                   : '¿Deseas buscar algo?',
               child: const Icon(Icons.search),
               onTap: () {
@@ -358,7 +358,7 @@ class ImagenPageState extends State<ImagenPage> with TickerProviderStateMixin {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Editar titulo de nota')
+                      Text('Editar título de nota')
                     ],
                   ),
                   onPressed: () {
@@ -390,7 +390,7 @@ class ImagenPageState extends State<ImagenPage> with TickerProviderStateMixin {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Eliminar nota de audio')
+                      Text('Eliminar imagen')
                     ],
                   ),
                   onPressed: () async {

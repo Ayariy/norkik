@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:norkik_app/models/user_model.dart';
 import 'package:norkik_app/pages/autenticacion_pages/loggedout_page.dart';
 
@@ -8,6 +9,8 @@ import 'package:norkik_app/pages/home_pages/navigation_bar_home_page.dart';
 import 'package:norkik_app/providers/conectividad.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
 import 'package:norkik_app/providers/notification.dart';
+import 'package:norkik_app/providers/theme.dart';
+import 'package:norkik_app/utils/theme_data.dart';
 import 'package:norkik_app/widget/cargando_widget.dart';
 import 'package:norkik_app/widget/error_widget.dart';
 import 'package:norkik_app/widget/nointernet_widget.dart';
@@ -22,6 +25,18 @@ class WrapPage extends StatefulWidget {
 }
 
 class _WrapPageState extends State<WrapPage> {
+  final Map<String, Color> _opcionesTemaColor = {
+    'NorkikTheme': const Color.fromRGBO(42, 74, 77, 1),
+    'OscuroTheme': Colors.grey.shade900,
+    'VerdeTheme': Colors.teal.shade900,
+    'RosadoTheme': Colors.pink.shade700,
+    'GrisTheme': Colors.grey.shade700,
+    'AzulTheme': Colors.indigo.shade900,
+    'AmarilloTheme': Colors.lime.shade900,
+    'RojoTheme': Colors.red.shade900,
+    'CafeTheme': Colors.brown.shade800,
+    'NaranjaTheme': Colors.amber.shade900,
+  };
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
@@ -38,9 +53,12 @@ class _WrapPageState extends State<WrapPage> {
               if (snapshot.hasData) {
                 UserModel userModel = snapshot.data as UserModel;
                 usuarioProvider.setUserGlobalWithoutNotify(userModel);
+
                 Provider.of<NotificationProvider>(context, listen: false)
                     .initialize(context);
 
+                //setTheme
+                // _setTheme(userModel);
                 return conection.isOnline
                     ? NavigationBarHomePage()
                     : NoInternetWidget();
@@ -86,5 +104,19 @@ class _WrapPageState extends State<WrapPage> {
             ],
           );
         }) as Future<bool>;
+  }
+
+  void _setTheme(UserModel userModel) {
+    if (mounted) {
+      Future.delayed(Duration.zero, () {
+        ThemeChanger themeChanger =
+            Provider.of<ThemeChanger>(context, listen: false);
+        themeChanger.setTheme(getColorTheme(
+            _opcionesTemaColor[userModel.apariencia.tema]!,
+            userModel.apariencia.font == 'Defecto'
+                ? null
+                : GoogleFonts.getTextTheme(userModel.apariencia.font)));
+      });
+    }
   }
 }

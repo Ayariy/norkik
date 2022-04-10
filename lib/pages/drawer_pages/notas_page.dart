@@ -29,7 +29,7 @@ class _NotasPageState extends State<NotasPage>
 
   GlobalKey<TextoPageState> globalKeyTxt = GlobalKey();
   GlobalKey<SonidoPageState> globalKeySound = GlobalKey();
-  GlobalKey<SonidoPageState> globalKeyImg = GlobalKey();
+  GlobalKey<ImagenPageState> globalKeyImg = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -43,12 +43,6 @@ class _NotasPageState extends State<NotasPage>
     }
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  // }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -61,10 +55,10 @@ class _NotasPageState extends State<NotasPage>
     return isLoading
         ? Scaffold(
             appBar: AppBar(
-              title: Text('Notas-Cuaderno digital'),
+              title: Text('Cuaderno digital'),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(40.0),
+            body: const Padding(
+              padding: EdgeInsets.all(40.0),
               child: Center(
                 child: CircularProgressIndicator(),
               ),
@@ -73,12 +67,12 @@ class _NotasPageState extends State<NotasPage>
         : listAsignatura.isNotEmpty
             ? Scaffold(
                 appBar: AppBar(
-                    title: Text('Notas - Cuaderno digital'),
+                    title: const Text('Cuaderno digital'),
                     bottom: PreferredSize(
                       child: isLoading
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : _crearDropdown(),
-                      preferredSize: Size.fromHeight(35.0),
+                      preferredSize: const Size.fromHeight(35.0),
                     )),
                 body: isLoading
                     ? Center(
@@ -96,15 +90,15 @@ class _NotasPageState extends State<NotasPage>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.text_format),
+                                      const Icon(Icons.text_format),
                                       Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
                                         decoration: BoxDecoration(
                                             color: tabController!.index == 0
                                                 ? Theme.of(context).primaryColor
                                                 : Theme.of(context).cardColor,
-                                            boxShadow: <BoxShadow>[
+                                            boxShadow: const <BoxShadow>[
                                               BoxShadow(
                                                   color: Colors.black26,
                                                   blurRadius: 5.0,
@@ -112,7 +106,7 @@ class _NotasPageState extends State<NotasPage>
                                                   offset: Offset(2.0, 4.0))
                                             ],
                                             borderRadius:
-                                                BorderRadius.horizontal(
+                                                const BorderRadius.horizontal(
                                                     right:
                                                         Radius.circular(10))),
                                         child: Text(
@@ -130,15 +124,15 @@ class _NotasPageState extends State<NotasPage>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.mic_sharp),
+                                      const Icon(Icons.mic_sharp),
                                       Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
                                         decoration: BoxDecoration(
                                             color: tabController!.index == 1
                                                 ? Theme.of(context).primaryColor
                                                 : Theme.of(context).cardColor,
-                                            boxShadow: <BoxShadow>[
+                                            boxShadow: const <BoxShadow>[
                                               BoxShadow(
                                                   color: Colors.black26,
                                                   blurRadius: 5.0,
@@ -146,7 +140,7 @@ class _NotasPageState extends State<NotasPage>
                                                   offset: Offset(2.0, 4.0))
                                             ],
                                             borderRadius:
-                                                BorderRadius.horizontal(
+                                                const BorderRadius.horizontal(
                                                     right:
                                                         Radius.circular(10))),
                                         child: Text(
@@ -172,13 +166,13 @@ class _NotasPageState extends State<NotasPage>
                                             .color,
                                       ),
                                       Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
                                         decoration: BoxDecoration(
                                             color: tabController!.index == 2
                                                 ? Theme.of(context).primaryColor
                                                 : Theme.of(context).cardColor,
-                                            boxShadow: <BoxShadow>[
+                                            boxShadow: const <BoxShadow>[
                                               BoxShadow(
                                                   color: Colors.black26,
                                                   blurRadius: 5.0,
@@ -225,13 +219,13 @@ class _NotasPageState extends State<NotasPage>
               )
             : Scaffold(
                 appBar: AppBar(
-                  title: Text('Notas - Cuaderno digital'),
+                  title: Text('Cuaderno digital'),
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(40.0),
+                body: const Padding(
+                  padding: EdgeInsets.all(40.0),
                   child: Center(
                     child: Text(
-                        'Por el momento no hay asignaturas asignadas al horario para crear su cuaderno digital'),
+                        'Por el momento no hay asignaturas asignadas al horario, para crear tu cuaderno digital'),
                   ),
                 ),
               );
@@ -262,7 +256,7 @@ class _NotasPageState extends State<NotasPage>
   Widget _crearDropdown() {
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).cardColor),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           Expanded(
@@ -272,19 +266,21 @@ class _NotasPageState extends State<NotasPage>
               value: asignaturaSelected!.idAsignatura,
               items: _getOpcionesDropdown(),
               onChanged: (String? op) {
+                setState(() async {
+                  asignaturaSelected = listAsignatura
+                      .firstWhere((element) => element.idAsignatura == op);
+                });
                 if (tabController!.index == 0) {
                   globalKeyTxt.currentState!.getListNotas();
                 } else if (tabController!.index == 1) {
                   globalKeySound.currentState!.getListNotas();
-                } else {}
-                setState(() {
-                  asignaturaSelected = listAsignatura
-                      .firstWhere((element) => element.idAsignatura == op);
-                });
+                } else {
+                  globalKeyImg.currentState!.getListNotas();
+                }
               },
             ),
           ),
-          Icon(Icons.calendar_today_outlined),
+          const Icon(Icons.calendar_today_outlined),
         ],
       ),
     );

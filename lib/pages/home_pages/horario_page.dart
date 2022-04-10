@@ -102,7 +102,7 @@ class _HorarioPageState extends State<HorarioPage> {
                             alignment: Alignment.center,
                             margin: EdgeInsets.zero,
                             width: 62,
-                            child: Text('Mie'),
+                            child: Text('Mié'),
                           ),
                           Container(
                             alignment: Alignment.center,
@@ -120,7 +120,7 @@ class _HorarioPageState extends State<HorarioPage> {
                             alignment: Alignment.center,
                             margin: EdgeInsets.zero,
                             width: 62,
-                            child: Text('Sab'),
+                            child: Text('Sáb'),
                           )
                         ],
                       ),
@@ -142,13 +142,13 @@ class _HorarioPageState extends State<HorarioPage> {
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.calendar_view_week),
-        onPressed: () {
-          Navigator.pushNamed(context, 'gestionarHorario')
-              .then((value) => _getHorarioDefault());
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.calendar_view_week),
+      //   onPressed: () {
+      //     Navigator.pushNamed(context, 'gestionarHorario')
+      //         .then((value) => _getHorarioDefault());
+      //   },
+      // ),
     );
   }
 
@@ -477,7 +477,7 @@ class _HorarioPageState extends State<HorarioPage> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Quitar esta clase')
+                      Text('Eliminar esta clase')
                     ],
                   ),
                   onPressed: () {

@@ -5,6 +5,7 @@ import 'package:norkik_app/models/user_model.dart';
 
 import 'package:norkik_app/providers/autenticacion.dart';
 import 'package:norkik_app/providers/conectividad.dart';
+import 'package:norkik_app/providers/img_list_provider.dart';
 import 'package:norkik_app/providers/norkikdb_providers/user_providers.dart';
 import 'package:norkik_app/providers/notification.dart';
 import 'package:norkik_app/providers/storage_shared.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
                     value: AuthProvider().user, initialData: null),
                 ChangeNotifierProvider(
                     create: (_) => UserProvider(UserModel.userModelNoData())),
+                ChangeNotifierProvider(create: (_) => ImgListProvider()),
               ],
               child: NorkikApp(),
             );

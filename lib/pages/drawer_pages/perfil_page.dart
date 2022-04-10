@@ -104,11 +104,6 @@ class _PerfilPageState extends State<PerfilPage> {
             });
           },
         ),
-        IconButton(
-          padding: EdgeInsets.all(0),
-          icon: Icon(Icons.more_vert),
-          onPressed: () {},
-        ),
       ],
       expandedHeight: 300,
       floating: false,
@@ -166,9 +161,16 @@ class _PerfilPageState extends State<PerfilPage> {
       children: [
         _getItemDetail(Icons.person, 'Nombre y Apellido',
             user.nombre + " " + user.apellido),
-        _getItemDetail(Icons.perm_contact_cal, 'Apodo', user.apodo),
-        _getItemDetail(FontAwesomeIcons.whatsapp, 'WhatsApp', user.whatsapp),
-        _getItemDetail(Icons.email, 'Email', user.email),
+        userGet.privacidad.apodo
+            ? _getItemDetail(Icons.perm_contact_cal, 'Apodo', user.apodo)
+            : const SizedBox(),
+        userGet.privacidad.whatsapp
+            ? _getItemDetail(
+                FontAwesomeIcons.whatsapp, 'WhatsApp', user.whatsapp)
+            : const SizedBox(),
+        userGet.privacidad.email
+            ? _getItemDetail(Icons.email, 'Email', user.email)
+            : const SizedBox(),
       ],
     );
   }
@@ -238,7 +240,9 @@ class _PerfilPageState extends State<PerfilPage> {
           title: Text(likePostModel.post.usuario.nombre +
               " " +
               likePostModel.post.usuario.apellido),
-          subtitle: Text(likePostModel.post.usuario.apodo),
+          subtitle: likePostModel.post.usuario.privacidad.apodo
+              ? Text(likePostModel.post.usuario.apodo)
+              : null,
           leading: CircleAvatar(
             backgroundImage: _getImagenUser(likePostModel.post.usuario.imgUrl),
           ),
@@ -375,63 +379,65 @@ class _PerfilPageState extends State<PerfilPage> {
                       ),
                     ),
                     SizedBox(width: 10),
-                    IconButton(
-                        onPressed: () async {
-                          if ((await likePostProvider
-                              .existLikePost(likePostModel.idLikePost))) {
-                            String whatsApp =
-                                likePostModel.post.usuario.whatsapp;
-                            if (whatsApp.startsWith('0')) {
-                              whatsApp = whatsApp.replaceFirst('0', '593');
-                            } else if (whatsApp.startsWith('+593')) {
-                              whatsApp = whatsApp.replaceFirst('+', '');
-                            }
+                    likePostModel.post.usuario.privacidad.whatsapp
+                        ? IconButton(
+                            onPressed: () async {
+                              if ((await likePostProvider
+                                  .existLikePost(likePostModel.idLikePost))) {
+                                String whatsApp =
+                                    likePostModel.post.usuario.whatsapp;
+                                if (whatsApp.startsWith('0')) {
+                                  whatsApp = whatsApp.replaceFirst('0', '593');
+                                } else if (whatsApp.startsWith('+593')) {
+                                  whatsApp = whatsApp.replaceFirst('+', '');
+                                }
 
-                            // print(likePostModel.post.usuario.email);
-                            String urlWhatsApp =
-                                'whatsapp://send?phone=$whatsApp';
-                            if (whatsApp != '' &&
-                                whatsApp != 'Celular desconocido') {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              if (await canLaunch(urlWhatsApp)) {
-                                await launch(urlWhatsApp);
-                                setState(() {
-                                  isLoading = false;
-                                });
+                                // print(likePostModel.post.usuario.email);
+                                String urlWhatsApp =
+                                    'whatsapp://send?phone=$whatsApp';
+                                if (whatsApp != '' &&
+                                    whatsApp != 'Celular desconocido') {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  if (await canLaunch(urlWhatsApp)) {
+                                    await launch(urlWhatsApp);
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    getAlert(
+                                        _scaffoldKey.currentContext!,
+                                        'Alerta WhatsApp',
+                                        'No se pudo abrir la aplicación WhatsApp');
+                                  }
+                                } else {
+                                  // if (mounted) {
+                                  getAlert(
+                                      // context,
+                                      _scaffoldKey.currentContext!,
+                                      'Alerta WhatsApp',
+                                      'El usuario no ha especificado correctamente su número de contacto');
+                                  // }
+                                }
                               } else {
-                                setState(() {
-                                  isLoading = false;
-                                });
                                 getAlert(
                                     _scaffoldKey.currentContext!,
-                                    'Alerta WhatsApp',
-                                    'No se pudó abrir la aplicación WhatsApp');
+                                    'Publicación Eliminada',
+                                    'La publicación ha sido eliminada');
+                                _agregarLikePost();
                               }
-                            } else {
-                              // if (mounted) {
-                              getAlert(
-                                  // context,
-                                  _scaffoldKey.currentContext!,
-                                  'Alerta WhatsApp',
-                                  'El usuario no ha escpecificado correctamente su número de contacto');
-                              // }
-                            }
-                          } else {
-                            getAlert(
-                                _scaffoldKey.currentContext!,
-                                'Publicación Eliminada',
-                                'La publicación ha sido eliminada');
-                            _agregarLikePost();
-                          }
-                        },
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          FontAwesomeIcons.whatsappSquare,
-                        ),
-                        iconSize: 35,
-                        color: Colors.green.shade700),
+                            },
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(
+                              FontAwesomeIcons.whatsappSquare,
+                            ),
+                            iconSize: 35,
+                            color: Colors.green.shade700)
+                        : const SizedBox(),
                   ],
                 ),
                 likePostModel.post.usuario.idUsuario ==
@@ -581,9 +587,11 @@ class _PerfilPageState extends State<PerfilPage> {
         Provider.of<UserProvider>(context, listen: false);
     userGet = await userProvider
         .getUserByIdWithoutNotify(userProvider.userGlobal.idUsuario);
-    setState(() {
-      isLoadingPerfil = false;
-    });
+    if (mounted) {
+      setState(() {
+        isLoadingPerfil = false;
+      });
+    }
   }
 }
 

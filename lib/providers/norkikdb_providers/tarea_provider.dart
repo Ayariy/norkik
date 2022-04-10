@@ -36,6 +36,68 @@ class TareaProvider {
     return (await tareaRef.doc(tareaId).get()).exists;
   }
 
+  Future<List<Future<TareaModel>>> getTareasByDate(
+      DocumentReference<Map<String, dynamic>> docRefUser,
+      DateTime init,
+      DateTime fin) async {
+    QuerySnapshot querySnapshot;
+
+    querySnapshot = await tareaRef
+        .where('Usuario', isEqualTo: docRefUser)
+        .where('Fecha',
+            isGreaterThanOrEqualTo:
+                DateTime(init.year, init.month, init.day, 0, 0))
+        .where('Fecha',
+            isLessThanOrEqualTo:
+                DateTime(fin.year, fin.month, fin.day, 23, 59, 59))
+        .get();
+
+    return querySnapshot.docs.map((elementTarea) async {
+      Map<String, dynamic> tareaMap =
+          elementTarea.data() as Map<String, dynamic>;
+      tareaMap.addAll({'idTarea': elementTarea.id});
+
+      DocumentReference docRefUser = tareaMap['Usuario'];
+      DocumentSnapshot docUser = await docRefUser.get();
+
+      DocumentReference docRefAsignatura = tareaMap['Asignatura'];
+      DocumentSnapshot docAsignatura = await docRefAsignatura.get();
+
+      Map<String, dynamic> mapAsignatura =
+          docAsignatura.data() as Map<String, dynamic>;
+      mapAsignatura.addAll({'idAsignatura': docAsignatura.id});
+
+      Map<String, dynamic> mapUser = docUser.data() as Map<String, dynamic>;
+      mapUser.addAll({'UID': docUser.id});
+
+      tareaMap['Usuario'] = mapUser;
+      tareaMap['Asignatura'] = mapAsignatura;
+
+      DocumentReference docRefDocente = mapAsignatura['Docente'];
+      DocumentSnapshot docDocente = await docRefDocente.get();
+      Map<String, dynamic> mapDocente =
+          docDocente.data() as Map<String, dynamic>;
+      mapDocente.addAll({'idDocente': docRefDocente.id});
+      mapAsignatura['Docente'] = mapDocente;
+
+      DocumentReference docRefPrivacidad = mapUser['Privacidad'];
+      DocumentSnapshot docPrivacidad = await docRefPrivacidad.get();
+      Map<String, dynamic> mapPrivacidad =
+          docPrivacidad.data() as Map<String, dynamic>;
+      mapPrivacidad.addAll({'idPrivacidad': docRefPrivacidad.id});
+      mapUser['Privacidad'] = mapPrivacidad;
+
+      DocumentReference docRefApariencia = mapUser['Apariencia'];
+      DocumentSnapshot docApariencia = await docRefApariencia.get();
+      Map<String, dynamic> mapApariencia =
+          docApariencia.data() as Map<String, dynamic>;
+      mapApariencia.addAll({'idApariencia': docRefApariencia.id});
+      mapUser['Apariencia'] = mapApariencia;
+
+      return TareaModel.fromFireStore(tareaMap);
+    }).toList();
+  }
+
   Future<List<Future<TareaModel>>> getTareas(
       DateTime? from,
       DocumentReference<Map<String, dynamic>> docRefAsignatura,
@@ -100,6 +162,63 @@ class TareaProvider {
 
     querySnapshot = await tareaRef
         .where('Usuario', isEqualTo: docRefUser)
+        .orderBy('Fecha', descending: true)
+        .get();
+
+    return querySnapshot.docs.map((elementTarea) async {
+      Map<String, dynamic> tareaMap =
+          elementTarea.data() as Map<String, dynamic>;
+      tareaMap.addAll({'idTarea': elementTarea.id});
+
+      DocumentReference docRefUser = tareaMap['Usuario'];
+      DocumentSnapshot docUser = await docRefUser.get();
+
+      DocumentReference docRefAsignatura = tareaMap['Asignatura'];
+      DocumentSnapshot docAsignatura = await docRefAsignatura.get();
+
+      Map<String, dynamic> mapAsignatura =
+          docAsignatura.data() as Map<String, dynamic>;
+      mapAsignatura.addAll({'idAsignatura': docAsignatura.id});
+
+      Map<String, dynamic> mapUser = docUser.data() as Map<String, dynamic>;
+      mapUser.addAll({'UID': docUser.id});
+
+      tareaMap['Usuario'] = mapUser;
+      tareaMap['Asignatura'] = mapAsignatura;
+
+      DocumentReference docRefDocente = mapAsignatura['Docente'];
+      DocumentSnapshot docDocente = await docRefDocente.get();
+      Map<String, dynamic> mapDocente =
+          docDocente.data() as Map<String, dynamic>;
+      mapDocente.addAll({'idDocente': docRefDocente.id});
+      mapAsignatura['Docente'] = mapDocente;
+
+      DocumentReference docRefPrivacidad = mapUser['Privacidad'];
+      DocumentSnapshot docPrivacidad = await docRefPrivacidad.get();
+      Map<String, dynamic> mapPrivacidad =
+          docPrivacidad.data() as Map<String, dynamic>;
+      mapPrivacidad.addAll({'idPrivacidad': docRefPrivacidad.id});
+      mapUser['Privacidad'] = mapPrivacidad;
+
+      DocumentReference docRefApariencia = mapUser['Apariencia'];
+      DocumentSnapshot docApariencia = await docRefApariencia.get();
+      Map<String, dynamic> mapApariencia =
+          docApariencia.data() as Map<String, dynamic>;
+      mapApariencia.addAll({'idApariencia': docRefApariencia.id});
+      mapUser['Apariencia'] = mapApariencia;
+
+      return TareaModel.fromFireStore(tareaMap);
+    }).toList();
+  }
+
+  Future<List<Future<TareaModel>>> getAllTareasByUserAsignatura(
+      DocumentReference<Map<String, dynamic>> docRefUser,
+      DocumentReference<Map<String, dynamic>> docRefAsignatura) async {
+    QuerySnapshot querySnapshot;
+
+    querySnapshot = await tareaRef
+        .where('Usuario', isEqualTo: docRefUser)
+        .where('Asignatura', isEqualTo: docRefAsignatura)
         .orderBy('Fecha', descending: true)
         .get();
 

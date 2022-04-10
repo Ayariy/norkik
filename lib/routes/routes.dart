@@ -5,11 +5,20 @@ import 'package:norkik_app/pages/autenticacion_pages/loggin_page.dart';
 import 'package:norkik_app/pages/autenticacion_pages/register_page.dart';
 import 'package:norkik_app/pages/drawer_pages/asignaturas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/configuracion_page.dart';
+import 'package:norkik_app/pages/drawer_pages/configuracion_pages/acerca_page.dart';
+import 'package:norkik_app/pages/drawer_pages/configuracion_pages/apariencia_page.dart';
+import 'package:norkik_app/pages/drawer_pages/configuracion_pages/general_page.dart';
+import 'package:norkik_app/pages/drawer_pages/configuracion_pages/horarioSetting_page.dart';
+import 'package:norkik_app/pages/drawer_pages/configuracion_pages/privacidad_page.dart';
 import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_imagen_page.dart';
 import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_sonido_page.dart';
 import 'package:norkik_app/pages/drawer_pages/cuaderno_pages/crear_texto_page.dart';
 import 'package:norkik_app/pages/drawer_pages/docentes_page.dart';
 import 'package:norkik_app/pages/drawer_pages/herramientas_page.dart';
+import 'package:norkik_app/pages/drawer_pages/herramientas_pages/mapa_page.dart';
+import 'package:norkik_app/pages/drawer_pages/herramientas_pages/ocr_page.dart';
+import 'package:norkik_app/pages/drawer_pages/herramientas_pages/qr_page.dart';
+import 'package:norkik_app/pages/drawer_pages/herramientas_pages/scanner_page.dart';
 import 'package:norkik_app/pages/drawer_pages/notas_page.dart';
 import 'package:norkik_app/pages/drawer_pages/perfil_page.dart';
 import 'package:norkik_app/pages/drawer_pages/perfil_pages/editar_perfil_page.dart';
@@ -82,5 +91,18 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
 
     //USUARIO
     'editUser': (context) => EditarUsuarioPage(),
+
+    //CONFIGURACIÓN,
+    'generalSetting': (context) => GeneralSettingPage(),
+    'aparienciaSetting': (context) => const AparienciaSettingPage(),
+    'horarioSetting': (context) => HorarioSettingPage(),
+    'acercaSetting': (context) => const AcercaSettingPage(),
+    'privacidadSetting': (context) => PrivacidadSettingPage(),
+
+    //HERRAMIENTAS
+    'ocr': (context) => OcrPage(),
+    'qr': (context) => QRPage(),
+    'scan': (context) => ScannerPage(),
+    'ocrMap': (context) => MapaPage()
   };
 }

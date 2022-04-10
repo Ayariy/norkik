@@ -164,7 +164,9 @@ class _ComunidadPageState extends State<ComunidadPage>
           title: Text(likePostModel.post.usuario.nombre +
               " " +
               likePostModel.post.usuario.apellido),
-          subtitle: Text(likePostModel.post.usuario.apodo),
+          subtitle: likePostModel.post.usuario.privacidad.apodo
+              ? Text(likePostModel.post.usuario.apodo)
+              : null,
           leading: CircleAvatar(
             backgroundImage: _getImagenUser(likePostModel.post.usuario.imgUrl),
           ),
@@ -305,63 +307,65 @@ class _ComunidadPageState extends State<ComunidadPage>
                       ),
                     ),
                     SizedBox(width: 10),
-                    IconButton(
-                        onPressed: () async {
-                          if ((await likePostProvider
-                              .existLikePost(likePostModel.idLikePost))) {
-                            String whatsApp =
-                                likePostModel.post.usuario.whatsapp;
-                            if (whatsApp.startsWith('0')) {
-                              whatsApp = whatsApp.replaceFirst('0', '593');
-                            } else if (whatsApp.startsWith('+593')) {
-                              whatsApp = whatsApp.replaceFirst('+', '');
-                            }
+                    likePostModel.post.usuario.privacidad.whatsapp
+                        ? IconButton(
+                            onPressed: () async {
+                              if ((await likePostProvider
+                                  .existLikePost(likePostModel.idLikePost))) {
+                                String whatsApp =
+                                    likePostModel.post.usuario.whatsapp;
+                                if (whatsApp.startsWith('0')) {
+                                  whatsApp = whatsApp.replaceFirst('0', '593');
+                                } else if (whatsApp.startsWith('+593')) {
+                                  whatsApp = whatsApp.replaceFirst('+', '');
+                                }
 
-                            // print(likePostModel.post.usuario.email);
-                            String urlWhatsApp =
-                                'whatsapp://send?phone=$whatsApp';
-                            if (whatsApp != '' &&
-                                whatsApp != 'Celular desconocido') {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              if (await canLaunch(urlWhatsApp)) {
-                                await launch(urlWhatsApp);
-                                setState(() {
-                                  isLoading = false;
-                                });
+                                // print(likePostModel.post.usuario.email);
+                                String urlWhatsApp =
+                                    'whatsapp://send?phone=$whatsApp';
+                                if (whatsApp != '' &&
+                                    whatsApp != 'Celular desconocido') {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  if (await canLaunch(urlWhatsApp)) {
+                                    await launch(urlWhatsApp);
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    getAlert(
+                                        _scaffoldKey.currentContext!,
+                                        'Alerta WhatsApp',
+                                        'No se puede abrir la aplicación WhatsApp');
+                                  }
+                                } else {
+                                  // if (mounted) {
+                                  getAlert(
+                                      // context,
+                                      _scaffoldKey.currentContext!,
+                                      'Alerta WhatsApp',
+                                      'El usuario no ha especificado correctamente su número de contacto');
+                                  // }
+                                }
                               } else {
-                                setState(() {
-                                  isLoading = false;
-                                });
                                 getAlert(
                                     _scaffoldKey.currentContext!,
-                                    'Alerta WhatsApp',
-                                    'No se pudó abrir la aplicación WhatsApp');
+                                    'Publicación Eliminada',
+                                    'La publicación ha sido eliminada');
+                                _agregarLikePost();
                               }
-                            } else {
-                              // if (mounted) {
-                              getAlert(
-                                  // context,
-                                  _scaffoldKey.currentContext!,
-                                  'Alerta WhatsApp',
-                                  'El usuario no ha escpecificado correctamente su número de contacto');
-                              // }
-                            }
-                          } else {
-                            getAlert(
-                                _scaffoldKey.currentContext!,
-                                'Publicación Eliminada',
-                                'La publicación ha sido eliminada');
-                            _agregarLikePost();
-                          }
-                        },
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          FontAwesomeIcons.whatsappSquare,
-                        ),
-                        iconSize: 35,
-                        color: Colors.green.shade700),
+                            },
+                            padding: EdgeInsets.zero,
+                            icon: Icon(
+                              FontAwesomeIcons.whatsappSquare,
+                            ),
+                            iconSize: 35,
+                            color: Colors.green.shade700)
+                        : const SizedBox(),
                   ],
                 ),
                 likePostModel.post.usuario.idUsuario ==

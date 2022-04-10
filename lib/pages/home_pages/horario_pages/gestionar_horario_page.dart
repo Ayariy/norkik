@@ -34,6 +34,12 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gestionar tus horarios'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.calendar_view_month_outlined),
+          )
+        ],
       ),
       body: isLoading
           ? Center(
@@ -106,9 +112,11 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
         HorarioModel horario = await itemHorario;
         listHorario.add(horario);
       }
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -135,7 +143,7 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Seleccionar este Horario de clases')
+                      Text('Seleccionar este horario de clases')
                     ],
                   ),
                   onPressed: () async {
@@ -180,7 +188,7 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Editar Horario de clases')
+                      Text('Editar horario de clases')
                     ],
                   ),
                   onPressed: () {
@@ -210,7 +218,7 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Eliminar Horario de clases')
+                      Text('Eliminar horario de clases')
                     ],
                   ),
                   onPressed: () async {
@@ -248,15 +256,15 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
             ),
             children: [
               ListTile(
-                visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                leading: Icon(Icons.description),
-                title: Text('Descripción'),
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                leading: const Icon(Icons.description),
+                title: const Text('Descripción'),
                 subtitle: Text(horario.descripcion),
               ),
               ListTile(
-                visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                leading: Icon(Icons.date_range),
-                title: Text('Fecha de creación del horario'),
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                leading: const Icon(Icons.date_range),
+                title: const Text('Fecha de creación del horario'),
                 subtitle: Text(DateFormat("EEEE, d MMMM y HH:mm", 'es')
                     .format(horario.fecha)),
               ),
@@ -270,8 +278,8 @@ class _GestionarHorariosState extends State<GestionarHorarios> {
                       horario.activo ? Theme.of(context).indicatorColor : null,
                 ),
                 title: Text(horario.activo
-                    ? 'Este horario de clases esta activo'
-                    : 'Este horario de clases no esta activo'),
+                    ? 'Este horario de clases está activo'
+                    : 'Este horario de clases no está activo'),
               )
             ],
           );

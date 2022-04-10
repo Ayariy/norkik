@@ -27,7 +27,7 @@ class _DocentesPageState extends State<DocentesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doncentes'),
+        title: Text('Docentes'),
       ),
       body: isLoading
           ? Center(
@@ -35,7 +35,7 @@ class _DocentesPageState extends State<DocentesPage> {
             )
           : listDocentes.isEmpty
               ? Center(
-                  child: Text('Aún no existe registros de docentes'),
+                  child: Text('Aún no existen registros de docentes'),
                 )
               : ListView.separated(
                   itemBuilder: (context, index) {

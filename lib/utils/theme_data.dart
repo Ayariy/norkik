@@ -5,7 +5,6 @@ ThemeData getNorkikTheme() {
   return ThemeData(
       brightness: Brightness.light,
       primaryColor: getPrimaryColor(),
-      // primarySwatch: getMaterialColorPrimary().,
       cardColor: getCardColor(),
       iconTheme: const IconThemeData(color: Colors.black),
       appBarTheme: AppBarTheme(
@@ -14,8 +13,24 @@ ThemeData getNorkikTheme() {
           FloatingActionButtonThemeData(backgroundColor: getPrimaryColor()));
 }
 
-ThemeData getDarkTheme() {
+ThemeData getColorTheme(Color colorPrimary, TextTheme? textTheme) {
+  return ThemeData(
+      brightness: Brightness.light,
+      primaryColor: colorPrimary,
+      textTheme: textTheme,
+      // fontFamily: ,
+      // primarySwatch: getMaterialColorPrimary().,
+      cardColor: getCardColor(),
+      iconTheme: IconThemeData(color: colorPrimary),
+      appBarTheme: AppBarTheme(
+          backgroundColor: colorPrimary, foregroundColor: Colors.white),
+      floatingActionButtonTheme:
+          FloatingActionButtonThemeData(backgroundColor: colorPrimary));
+}
+
+ThemeData getDarkTheme(TextTheme? textTheme) {
   return ThemeData(
       brightness: Brightness.dark,
+      textTheme: textTheme,
       appBarTheme: AppBarTheme(foregroundColor: Colors.white));
 }

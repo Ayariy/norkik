@@ -71,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 5,
                 ),
                 Text(
-                  '¡Porfavor! Llena los siguientes campos para crear una cuenta',
+                  'Llena los siguientes campos para crear una cuenta',
                 ),
                 SizedBox(
                   height: 25,
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _nombreController,
                   validator: (value) =>
-                      value!.isNotEmpty ? null : 'Porfavor ingrese su nombre',
+                      value!.isNotEmpty ? null : 'Ingresa tu nombre',
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.badge),
                       hintText: 'Nombre',
@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _apellidoController,
                   validator: (value) =>
-                      value!.isNotEmpty ? null : 'Porfavor ingrese su apellido',
+                      value!.isNotEmpty ? null : 'Ingresa tu apellido',
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.assignment),
                       hintText: 'Apellido',
@@ -104,9 +104,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 TextFormField(
                   controller: _apodoController,
-                  validator: (value) => value!.isNotEmpty
-                      ? null
-                      : 'Porfavor ingrese su apodo o nickname',
+                  validator: (value) =>
+                      value!.isNotEmpty ? null : 'Ingresa tu apodo',
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.assignment_ind),
                       hintText: 'Apodo',
@@ -126,10 +125,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (value.length > 9) {
                         return null;
                       } else {
-                        return 'Ingrese su número de celular completo';
+                        return 'Ingrese tu número de celular';
                       }
                     } else {
-                      return 'Porfavor ingrese su número celular';
+                      return 'Ingresa tu número de celular';
                     }
                   },
                   decoration: InputDecoration(
@@ -146,18 +145,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Porfavor ingrese su correo';
+                      return 'Ingresa tu correo';
                     } else if (value.contains('@') &&
                         value.contains('.') &&
                         value.endsWith('.com')) {
                       return null;
                     } else {
-                      return 'Porfavor ingrese correctamente su correo';
+                      return 'Ingresa correctamente tu correo';
                     }
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
-                      hintText: 'Email',
+                      hintText: 'Correo',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -168,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _passwordController,
                   validator: (value) => value!.length >= 5
                       ? null
-                      : 'Su contraseña debe ser mayor a 5 dígitos',
+                      : 'Tu contraseña debe ser mayor a 5 dígitos',
                   obscureText: true,
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.vpn_key),
@@ -176,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 MaterialButton(
@@ -186,11 +185,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ? null
                         : () async {
                             if (_formKey.currentState!.validate()) {
-                              // print('Nombre: ' + _nombreController.text);
-                              // print('Apellido: ' + _apellidoController.text);
-                              // print('Apodo: ' + _apodoController.text);
-                              // print('Email: ' + _emailController.text);
-                              // print('Contraseña: ' + _passwordController.text);
                               UserModel userModel = UserModel(
                                   idUsuario: '',
                                   nombre: _nombreController.text,

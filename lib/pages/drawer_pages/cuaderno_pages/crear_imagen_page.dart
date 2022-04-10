@@ -72,12 +72,11 @@ class _CrearImgPageState extends State<CrearImgPage> {
         children: [
           TextFormField(
             controller: _tituloController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese el titulo de la imagen',
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa el título de la imagen',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.class_),
-              hintText: 'Titulo de la imagen',
+              hintText: 'Título de la imagen',
             ),
           ),
           _buildImgWidget(),
@@ -170,14 +169,14 @@ class _CrearImgPageState extends State<CrearImgPage> {
                             Navigator.pop(context);
                           } else {
                             getAlert(context, 'Error de carga',
-                                'Ocurrió un error en la carga del audio, Porfavor, intentelo más tarde');
+                                'Ocurrió un error en la carga de la foto, Por favor, inténtalo más tarde');
                           }
                           setState(() {
                             isLoading = false;
                           });
                         } else {
                           getAlert(context, 'Imagen no seleccionada',
-                              'Porfavor seleccione una imagen a guardar');
+                              'Por favor seleccione una imagen a guardar');
                         }
                       }
                     })

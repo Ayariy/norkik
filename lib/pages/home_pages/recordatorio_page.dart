@@ -46,46 +46,49 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
     NotificationProvider notificationProvider =
         Provider.of<NotificationProvider>(context, listen: false);
 
-    return Scaffold(
-      body: Column(
-        children: [
-          _crearDropdown(),
-          // Expanded(child: _listRecordatorio()),
-          Expanded(
-            child: isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : listRecordatorioModel.isEmpty
-                    ? Center(
-                        child: Text('No hay recordatorios para esta fecha'),
-                      )
-                    : ListView.separated(
-                        itemBuilder: (context, index) {
-                          return FadeInLeft(
-                              child: _listTile(listRecordatorioModel[index]));
-                        },
-                        separatorBuilder: (_, __) => FadeInLeft(
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(vertical: 0),
-                                width: double.infinity,
-                                height: 0.5,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .color,
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            _crearDropdown(),
+            // Expanded(child: _listRecordatorio()),
+            Expanded(
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : listRecordatorioModel.isEmpty
+                      ? Center(
+                          child: Text('No hay recordatorios para esta fecha'),
+                        )
+                      : ListView.separated(
+                          itemBuilder: (context, index) {
+                            return FadeInLeft(
+                                child: _listTile(listRecordatorioModel[index]));
+                          },
+                          separatorBuilder: (_, __) => FadeInLeft(
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 0),
+                                  width: double.infinity,
+                                  height: 0.5,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
+                                ),
                               ),
-                            ),
-                        itemCount: listRecordatorioModel.length),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Navigator.pushNamed(context, 'crearRecordatorio')
-              .then((value) => _getListRecordatorios());
-        },
-        child: Icon(Icons.add),
+                          itemCount: listRecordatorioModel.length),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Navigator.pushNamed(context, 'crearRecordatorio')
+                .then((value) => _getListRecordatorios());
+          },
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
@@ -340,7 +343,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
                 _showModalWidget(recordatorioModel);
               } else {
                 getAlert(context, 'Recordatorio Inexistente',
-                    'El recordatorio pulsado no existe');
+                    'El recordatorio seleccionado no existe');
               }
             },
           ),
@@ -439,7 +442,7 @@ class _RecordatorioPageState extends State<RecordatorioPage> {
 
     showModalBottomSheet(
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         isScrollControlled: true,
         context: context,

@@ -85,8 +85,7 @@ class _NoticiasFavoritosState extends State<NoticiasFavoritos> {
           children: [
             listNoticias.isEmpty && !isLoading
                 ? Expanded(
-                    child:
-                        Center(child: Text('Agregue sus noticias a favoritos')))
+                    child: Center(child: Text('Agrega tus noticias favoritas')))
                 : SizedBox(),
             isLoading
                 ? Expanded(

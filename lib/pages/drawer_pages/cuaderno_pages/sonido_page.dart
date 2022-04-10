@@ -40,7 +40,6 @@ class SonidoPageState extends State<SonidoPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (mounted) {
       getListNotas();
@@ -112,7 +111,7 @@ class SonidoPageState extends State<SonidoPage> with TickerProviderStateMixin {
                 )
               : SizedBox(),
           isLoading
-              ? Expanded(
+              ? const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -375,7 +374,7 @@ class SonidoPageState extends State<SonidoPage> with TickerProviderStateMixin {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('Editar titulo de nota')
+                      Text('Editar título de nota')
                     ],
                   ),
                   onPressed: () {

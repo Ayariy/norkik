@@ -75,7 +75,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
             TextFormField(
               controller: _nombreController,
               validator: (value) =>
-                  value!.isNotEmpty ? null : 'Porfavor ingrese su nombre ',
+                  value!.isNotEmpty ? null : 'Ingresa tu nombre ',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.badge),
                 hintText: 'Nombre',
@@ -90,7 +90,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
             TextFormField(
               controller: _apellidoController,
               validator: (value) =>
-                  value!.isNotEmpty ? null : 'Porfavor ingrese su apellido ',
+                  value!.isNotEmpty ? null : 'Ingresa tu apellido ',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
                 hintText: 'Apellido',
@@ -99,12 +99,11 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
 
             TextFormField(
               controller: _apodoController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese su su apodo o nickname ',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingrese tu apodo',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment_ind),
-                hintText: 'Apodo o nickname',
+                hintText: 'Apodo',
               ),
             ),
 
@@ -118,13 +117,13 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
                   if (value.length > 9) {
                     return null;
                   } else {
-                    return 'Ingrese su número de celular completo';
+                    return 'Ingresa tu número de celular';
                   }
                 } else {
-                  return 'Porfavor ingrese su número celular';
+                  return 'Ingresa tu número celular';
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(FontAwesomeIcons.whatsapp),
                 hintText: 'Número celular',
               ),
@@ -137,21 +136,21 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
                   userProvider.userGlobal.password == '******' ? true : false,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Porfavor ingrese su correo';
+                  return 'Ingresa tu correo';
                 } else if (value.contains('@') &&
                     value.contains('.') &&
                     value.endsWith('.com')) {
                   return null;
                 } else {
-                  return 'Porfavor ingrese correctamente su correo';
+                  return 'Ingresa correctamente tu correo';
                 }
               },
               decoration: InputDecoration(
                 label: userProvider.userGlobal.password == '******'
-                    ? Text('No se puede editar por autenticacion con Google')
+                    ? Text('No se puede editar por autenticación con Google')
                     : null,
                 prefixIcon: Icon(Icons.email),
-                hintText: 'Email',
+                hintText: 'Correo',
               ),
             ),
 
@@ -168,7 +167,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
               obscureText: true,
               decoration: InputDecoration(
                 label: userProvider.userGlobal.password == '******'
-                    ? Text('No se puede editar por autenticacion con Google')
+                    ? Text('No se puede editar por autenticación con Google')
                     : null,
                 prefixIcon: Icon(Icons.vpn_key),
                 hintText: 'Contraseña',
@@ -329,7 +328,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
                                       userModel, privacidadRef, aparienciaRef);
                                 } else {
                                   getAlert(context, 'Error de carga',
-                                      'Ocurrió un error en la carga de la foto, Porfavor, intentelo más tarde');
+                                      'Ocurrió un error en la carga de la foto. Por favor, inténtalo más tarde');
                                 }
                               } else {
                                 //cambia foto de perfil y datos tocando storage
@@ -360,7 +359,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
                                       userModel, privacidadRef, aparienciaRef);
                                 } else {
                                   getAlert(context, 'Error de carga',
-                                      'Ocurrió un error en la carga de la foto, Porfavor, intentelo más tarde');
+                                      'Ocurrió un error en la carga de la foto. Por favor, inténtalo más tarde');
                                 }
                               }
                             } else {
@@ -389,7 +388,7 @@ class _EditarUsuarioPageState extends State<EditarUsuarioPage> {
                                     userModel, privacidadRef, aparienciaRef);
                               } else {
                                 getAlert(context, 'Error de carga',
-                                    'Ocurrió un error en la carga de la foto, Porfavor, intentelo más tarde');
+                                    'Ocurrió un error en la carga de la foto. Porfavor, inténtalo más tarde');
                               }
                             }
                           }

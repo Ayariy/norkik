@@ -36,7 +36,7 @@ class _EditarSonidoPageState extends State<EditarSonidoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar titulo'),
+        title: Text('Editar título'),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
@@ -63,12 +63,11 @@ class _EditarSonidoPageState extends State<EditarSonidoPage> {
         children: [
           TextFormField(
             controller: _tituloController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese el titulo de la nota',
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa el título del audio',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.class_),
-              hintText: 'Titulo de la nota',
+              hintText: 'Título del audio',
             ),
           ),
           ListTile(
@@ -108,7 +107,7 @@ class _EditarSonidoPageState extends State<EditarSonidoPage> {
                         SizedBox(
                           width: 15,
                         ),
-                        Text('Editar titulo'),
+                        Text('Editar título'),
                       ],
               ),
               textColor: Theme.of(context).appBarTheme.foregroundColor,

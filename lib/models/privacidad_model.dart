@@ -14,8 +14,8 @@ class PrivacidadModel {
     return PrivacidadModel(
         idPrivacidad: privacidad['idPrivacidad'],
         whatsapp: privacidad['WhatsApp'],
-        apodo: privacidad['Email'],
-        email: privacidad['Apodo']);
+        apodo: privacidad['Apodo'],
+        email: privacidad['Email']);
   }
 
   Map<String, dynamic> toMap() => {

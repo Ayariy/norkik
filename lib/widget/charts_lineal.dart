@@ -59,7 +59,7 @@ class _ChartsLinealState extends State<ChartsLineal> {
     ];
 
     //COLOR DE LOS LABELS DEL CHARTSBAR
-    final axisDomainString = charts.OrdinalAxisSpec(
+    charts.OrdinalAxisSpec axisDomainString = charts.OrdinalAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
       labelStyle: charts.TextStyleSpec(
           fontSize: 13,
@@ -68,7 +68,7 @@ class _ChartsLinealState extends State<ChartsLineal> {
               .bodyText2!
               .color!)), //chnage white color as per your requirement.
     ));
-    final axisMeasureInt = charts.NumericAxisSpec(
+    charts.NumericAxisSpec axisMeasureInt = charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
       labelStyle: charts.TextStyleSpec(
           fontSize: 10,

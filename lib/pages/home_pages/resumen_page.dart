@@ -101,8 +101,7 @@ class _ResumenPageState extends State<ResumenPage> {
                     : listRecordatorio[1]!.isEmpty && listTarea[1]!.isEmpty
                         ? Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text('No hay eventos pendientes para hoy día'),
+                            child: Text('No hay eventos pendientes para hoy.'),
                           )
                         : FadeInDown(child: _cardEventos(1)),
                 isLoadingClases
@@ -626,11 +625,12 @@ class _ResumenPageState extends State<ResumenPage> {
     for (var tarea in listTarea[dayArray]!) {
       widgetList.add(
         ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-          minLeadingWidth: 5,
-          minVerticalPadding: 0,
-          title: Text(tarea.nombre +
-              "(${tarea.realizado ? 'Realizado' : 'Sin realizar'})"),
+          title: Text(
+            tarea.nombre +
+                "(${tarea.realizado ? 'Realizado' : 'Sin realizar'})",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           subtitle: Text('Tarea'),
           leading: Column(children: [
             tarea.realizado

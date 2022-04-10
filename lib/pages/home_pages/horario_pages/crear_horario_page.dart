@@ -47,7 +47,7 @@ class _CrearHorarioState extends State<CrearHorario> {
             TextFormField(
               controller: _nombreController,
               validator: (value) =>
-                  value!.isNotEmpty ? null : 'Porfavor ingrese el nombre',
+                  value!.isNotEmpty ? null : 'Ingresa el nombre',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.class_),
                 hintText: 'Nombre del horario',
@@ -56,9 +56,8 @@ class _CrearHorarioState extends State<CrearHorario> {
             TextFormField(
               maxLines: null,
               controller: _descripcionController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese una pequeña descripción',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingresa una descripción',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.description),
                 hintText: 'Descripción del horario',
@@ -82,7 +81,7 @@ class _CrearHorarioState extends State<CrearHorario> {
                           SizedBox(
                             width: 15,
                           ),
-                          Text('Crear Horario de clases'),
+                          Text('Crear horario de clases'),
                         ],
                 ),
                 textColor: Theme.of(context).appBarTheme.foregroundColor,

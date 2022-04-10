@@ -8,7 +8,7 @@ getAlert(BuildContext context, String title, String contenido) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(24, 20, 24, 0),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Text(title),
           content: Text(contenido),
           actions: [

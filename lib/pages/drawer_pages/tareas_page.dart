@@ -4,7 +4,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:norkik_app/models/asignatura_model.dart';
 import 'package:norkik_app/models/tarea_model.dart';
-import 'package:norkik_app/models/user_model.dart';
 import 'package:norkik_app/pages/drawer_pages/tarea_pages/crear_tarea_page.dart';
 import 'package:norkik_app/pages/drawer_pages/tarea_pages/editar_tarea_page.dart';
 import 'package:norkik_app/pages/drawer_pages/tarea_pages/ver_tarea_page.dart';
@@ -26,7 +25,7 @@ class TareasPage extends StatefulWidget {
 
 class _TareasPageState extends State<TareasPage> {
   String _opcionSeleccionada = 'Esta semana';
-  List<String> _opcionesTiempo = [
+  final List<String> _opcionesTiempo = [
     'Ayer',
     'Hoy',
     'Esta semana',
@@ -145,7 +144,7 @@ class _TareasPageState extends State<TareasPage> {
                 }),
             SpeedDialChild(
                 label: isSearch
-                    ? '¿Ocultar campo de busqueda?'
+                    ? '¿Ocultar campo de búsqueda?'
                     : '¿Deseas buscar algo?',
                 child: const Icon(Icons.search),
                 onTap: () {
@@ -185,33 +184,33 @@ class _TareasPageState extends State<TareasPage> {
   }
 
   Future<void> getListTareas() async {
-    // if (asignaturaSelected != null) {
-    isLoadingList = true;
-    listTareas.clear();
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    DocumentReference<Map<String, dynamic>> userRef = (await userProvider
-        .getUserReferenceById(userProvider.userGlobal.idUsuario))!;
-    // print(listAsignatura.length);
-    DocumentReference<Map<String, dynamic>> asignaturaRef =
-        (await asignaturaProvider
-            .getAsignaturaReferenceById(asignaturaSelected!.idAsignatura))!;
-    List<Future<TareaModel>> listFutureTareas =
-        await tareaProvider.getTareas(null, asignaturaRef, userRef);
-    for (var tarea in listFutureTareas) {
-      TareaModel tareaModel = await tarea;
-      listTareas.add(tareaModel);
-    }
+    if (asignaturaSelected != null) {
+      isLoadingList = true;
+      listTareas.clear();
+      UserProvider userProvider =
+          Provider.of<UserProvider>(context, listen: false);
+      DocumentReference<Map<String, dynamic>> userRef = (await userProvider
+          .getUserReferenceById(userProvider.userGlobal.idUsuario))!;
+      // print(listAsignatura.length);
+      DocumentReference<Map<String, dynamic>> asignaturaRef =
+          (await asignaturaProvider
+              .getAsignaturaReferenceById(asignaturaSelected!.idAsignatura))!;
+      List<Future<TareaModel>> listFutureTareas =
+          await tareaProvider.getTareas(null, asignaturaRef, userRef);
+      for (var tarea in listFutureTareas) {
+        TareaModel tareaModel = await tarea;
+        listTareas.add(tareaModel);
+      }
 
-    listTareasAux = listTareas;
-    _getListRecordatoriosEstaSemana();
-    if (mounted) {
-      setState(() {
-        isLoadingList = false;
-        _opcionSeleccionada = 'Esta semana';
-      });
+      listTareasAux = listTareas;
+      _getListRecordatoriosEstaSemana();
+      if (mounted) {
+        setState(() {
+          isLoadingList = false;
+          _opcionSeleccionada = 'Esta semana';
+        });
+      }
     }
-    // }
   }
 
   Widget _crearDropdown() {
@@ -601,17 +600,9 @@ class _TareasPageState extends State<TareasPage> {
               if (await tareaProvider.existTarea(tareaModel.idTarea)) {
                 _showModalWidget(tareaModel);
               } else {
-                getAlert(
-                    context, 'Tarea Inexistente', 'La tarea pulsada no existe');
+                getAlert(context, 'Tarea Inexistente',
+                    'La tarea seleccionada no existe');
               }
-              // List<RecordatorioModel> listModel =
-              //     await storageShared.obtenerRecordatoriosStorageList();
-              // var contain = listModel
-              //     .where((element) => element.id == tareaModel.id);
-              // if (contain.isNotEmpty) {
-              //   _showModalWidget(tareaModel);
-              // } else {
-              // }
             },
           ),
           onTap: () {
@@ -631,7 +622,7 @@ class _TareasPageState extends State<TareasPage> {
         children: [
           Text(
             tiempo,
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
           ),
           Text(fecha)
         ],

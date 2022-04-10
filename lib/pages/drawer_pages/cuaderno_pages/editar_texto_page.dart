@@ -38,8 +38,8 @@ class _EditarNotaTextoState extends State<EditarNotaTexto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar nota de texto'),
-        actions: [
+        title: const Text('Editar nota de texto'),
+        actions: const [
           Padding(
             padding: EdgeInsets.only(right: 10),
             child: Icon(Icons.text_fields),
@@ -67,10 +67,10 @@ class _EditarNotaTextoState extends State<EditarNotaTexto> {
             controller: _tituloController,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor ingrese el titulo de la nota',
+                : 'Ingresa el título de la nota de texto',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.class_),
-              hintText: 'Titulo de la nota',
+              hintText: 'Título de la nota',
             ),
           ),
           TextFormField(
@@ -79,10 +79,10 @@ class _EditarNotaTextoState extends State<EditarNotaTexto> {
             controller: _descripcionController,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor ingrese una descripcion a la nota',
+                : 'Ingresa una descripción de la nota de texto',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.description),
-              hintText: 'Descripción de la nota',
+              hintText: 'Descripción de la nota de texto',
             ),
             onChanged: (value) {
               setState(() {});

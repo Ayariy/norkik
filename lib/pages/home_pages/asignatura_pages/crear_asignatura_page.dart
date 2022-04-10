@@ -58,10 +58,10 @@ class _CrearAsignaturaState extends State<CrearAsignatura> {
             controller: _docenteController,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor seleccione el docente de la materia',
+                : 'Selecciona el docente de la materia',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.person),
-              hintText: 'Seleccione un docente',
+              hintText: 'Selecciona un docente',
             ),
             onTap: () {
               _showSelectDocente();
@@ -69,9 +69,8 @@ class _CrearAsignaturaState extends State<CrearAsignatura> {
           ),
           TextFormField(
             controller: _nombreController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese el nombre de la asignatura',
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa el nombre de la asignatura',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.class_),
               hintText: 'Nombre de la asignatura',
@@ -82,17 +81,17 @@ class _CrearAsignaturaState extends State<CrearAsignatura> {
             maxLines: null,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor ingrese una descripcion a la asignatura',
+                : 'Ingresa una descripción de la asignatura',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.description),
-              hintText: 'Descripción a la asignatura',
+              hintText: 'Descripción de la asignatura',
             ),
           ),
           TextFormField(
             controller: _salonController,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor ingrese un salón o aula de clases a la asignatura',
+                : 'Ingresa el salón o aula de la asignatura',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.location_on),
               hintText: 'Aula de clases',
@@ -145,7 +144,7 @@ class _CrearAsignaturaState extends State<CrearAsignatura> {
                             docRefDocente);
                       } else {
                         getAlert(context, 'Error en la ejecución',
-                            'No se pudo completar su petición, intentelo más tarde');
+                            'No se pudo completar su petición, inténtalo más tarde');
                       }
                       setState(() {
                         Navigator.pop(context);

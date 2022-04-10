@@ -43,8 +43,8 @@ class _CrearNotaTextoState extends State<CrearNotaTexto> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
           child: asignatura == null
-              ? Center(
-                  child: Text('Ocurrió un problema, intentelo más tarde'),
+              ? const Center(
+                  child: Text('Ocurrió un problema, inténtalo más tarde'),
                 )
               : _formNotaTexto(),
         ),
@@ -62,21 +62,19 @@ class _CrearNotaTextoState extends State<CrearNotaTexto> {
         children: [
           TextFormField(
             controller: _tituloController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese el titulo de la nota',
-            decoration: InputDecoration(
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa el título de la nota',
+            decoration: const InputDecoration(
               prefixIcon: Icon(Icons.class_),
-              hintText: 'Titulo de la nota',
+              hintText: 'Título de la nota',
             ),
           ),
           TextFormField(
             keyboardType: TextInputType.multiline,
             maxLines: null,
             controller: _descripcionController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese una descripcion a la nota',
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa una descripción de la nota',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.description),
               hintText: 'Descripción de la nota',
@@ -160,7 +158,7 @@ class _CrearNotaTextoState extends State<CrearNotaTexto> {
                           Navigator.pop(context);
                         } else {
                           getAlert(context, 'Error',
-                              'Ocurrió un error inesperado, intentelo más tarde');
+                              'Ocurrió un error inesperado, inténtalo más tarde');
                         }
 
                         setState(() {

@@ -30,7 +30,7 @@ class AuthProvider with ChangeNotifier {
       return userAuth;
     } on SocketException {
       setLoading(false);
-      setMessage('Error, porfavor verifica tu conección de internet');
+      setMessage('Error, porfavor verifica tu conexión de internet');
     } on FirebaseAuthException catch (e) {
       setLoading(false);
       switch (e.code) {
@@ -69,7 +69,7 @@ class AuthProvider with ChangeNotifier {
       return userAuth;
     } on SocketException {
       setLoading(false);
-      setMessage('Error, porfavor verifica tu conección de internet');
+      setMessage('Error, porfavor verifica tu conexión de internet');
     } on FirebaseAuthException catch (e) {
       setLoading(false);
       switch (e.code) {
@@ -82,11 +82,11 @@ class AuthProvider with ChangeNotifier {
           break;
         case 'user-not-found':
           setMessage(
-              'No hay un usuario correspondiente al correo electrónico dado.');
+              'No hay un usuario correspondiente al correo electrónico ingresado.');
           break;
         case 'wrong-password':
           setMessage(
-              'La contraseña no es válida para el correo electrónico dado.');
+              'La contraseña no es válida para el correo electrónico ingresado.');
           break;
         default:
           setMessage(
@@ -131,11 +131,11 @@ class AuthProvider with ChangeNotifier {
           break;
         case 'user-disabled':
           setMessage(
-              'El usuario correspondiente a la credencial dada ha sido deshabilitado.');
+              'El usuario correspondiente a la credencial ingresada ha sido deshabilitada.');
           break;
         case 'user-not-found':
           setMessage(
-              'No hay ningún usuario que corresponda al correo electrónico dado.');
+              'No hay ningún usuario que corresponda al correo electrónico ingresado.');
           break;
         case 'wrong-password':
           setMessage(

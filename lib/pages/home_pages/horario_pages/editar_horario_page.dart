@@ -64,7 +64,7 @@ class _EditarHorarioState extends State<EditarHorario> {
             TextFormField(
               controller: _nombreController,
               validator: (value) =>
-                  value!.isNotEmpty ? null : 'Porfavor ingrese el nombre',
+                  value!.isNotEmpty ? null : 'Ingresa el nombre',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.class_),
                 hintText: 'Nombre del horario',
@@ -73,9 +73,8 @@ class _EditarHorarioState extends State<EditarHorario> {
             TextFormField(
               maxLines: null,
               controller: _descripcionController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese una pequeña descripción',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingresa una descripción',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.description),
                 hintText: 'Descripción del horario',
@@ -99,7 +98,7 @@ class _EditarHorarioState extends State<EditarHorario> {
                           SizedBox(
                             width: 15,
                           ),
-                          Text('Editar Horario de clases'),
+                          Text('Editar horario de clases'),
                         ],
                 ),
                 textColor: Theme.of(context).appBarTheme.foregroundColor,
@@ -122,8 +121,8 @@ class _EditarHorarioState extends State<EditarHorario> {
                                     userProvider.userGlobal.idUsuario))!);
                             Navigator.pop(context);
                           } else {
-                            getAlert(context, 'Fallo la petición',
-                                'No se pudo completar la petición, intentelo más tarde');
+                            getAlert(context, 'Falló la petición',
+                                'No se pudo completar la petición, inténtalo más tarde');
                           }
                           setState(() {
                             isLoading = false;

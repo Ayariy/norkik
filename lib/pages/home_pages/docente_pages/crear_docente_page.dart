@@ -40,9 +40,8 @@ class _CrearDocenteState extends State<CrearDocente> {
           children: [
             TextFormField(
               controller: _nombreController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese el nombre del docente',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingresa el nombre del docente',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 hintText: 'Nombre del docente',
@@ -50,9 +49,8 @@ class _CrearDocenteState extends State<CrearDocente> {
             ),
             TextFormField(
               controller: _apellidoController,
-              validator: (value) => value!.isNotEmpty
-                  ? null
-                  : 'Porfavor ingrese el apellido del docente',
+              validator: (value) =>
+                  value!.isNotEmpty ? null : 'Ingresa el apellido del docente',
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.person_outline_outlined),
                 hintText: 'Apellido del docente',
@@ -63,13 +61,13 @@ class _CrearDocenteState extends State<CrearDocente> {
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Porfavor ingrese el correo';
+                  return 'Ingresa el correo';
                 } else if (value.contains('@') &&
                     value.contains('.') &&
                     (value.endsWith('.com') || value.endsWith('.ec'))) {
                   return null;
                 } else {
-                  return 'Porfavor ingrese correctamente el correo';
+                  return 'Ingresa correctamente el correo';
                 }
               },
               decoration: InputDecoration(

@@ -65,6 +65,65 @@ class NotaProvider {
     return (await notaRef.doc(notaId).get()).exists;
   }
 
+  Future<List<Future<NotaModel>>> getNotasByDate(
+      DocumentReference<Map<String, dynamic>> docRefUser,
+      DateTime init,
+      DateTime fin) async {
+    QuerySnapshot querySnapshot = await notaRef
+        .where('Usuario', isEqualTo: docRefUser)
+        .where('Fecha',
+            isGreaterThanOrEqualTo:
+                DateTime(init.year, init.month, init.day, 0, 0))
+        .where('Fecha',
+            isLessThanOrEqualTo:
+                DateTime(fin.year, fin.month, fin.day, 23, 59, 59))
+        .get();
+
+    return querySnapshot.docs.map((elementNota) async {
+      Map<String, dynamic> notaMap = elementNota.data() as Map<String, dynamic>;
+      notaMap.addAll({'idNota': elementNota.id});
+
+      DocumentReference docRefUser = notaMap['Usuario'];
+      DocumentSnapshot docUser = await docRefUser.get();
+
+      DocumentReference docRefAsignatura = notaMap['Asignatura'];
+      DocumentSnapshot docAsignatura = await docRefAsignatura.get();
+
+      Map<String, dynamic> mapAsignatura =
+          docAsignatura.data() as Map<String, dynamic>;
+      mapAsignatura.addAll({'idAsignatura': docAsignatura.id});
+
+      Map<String, dynamic> mapUser = docUser.data() as Map<String, dynamic>;
+      mapUser.addAll({'UID': docUser.id});
+
+      notaMap['Usuario'] = mapUser;
+      notaMap['Asignatura'] = mapAsignatura;
+
+      DocumentReference docRefDocente = mapAsignatura['Docente'];
+      DocumentSnapshot docDocente = await docRefDocente.get();
+      Map<String, dynamic> mapDocente =
+          docDocente.data() as Map<String, dynamic>;
+      mapDocente.addAll({'idDocente': docRefDocente.id});
+      mapAsignatura['Docente'] = mapDocente;
+
+      DocumentReference docRefPrivacidad = mapUser['Privacidad'];
+      DocumentSnapshot docPrivacidad = await docRefPrivacidad.get();
+      Map<String, dynamic> mapPrivacidad =
+          docPrivacidad.data() as Map<String, dynamic>;
+      mapPrivacidad.addAll({'idPrivacidad': docRefPrivacidad.id});
+      mapUser['Privacidad'] = mapPrivacidad;
+
+      DocumentReference docRefApariencia = mapUser['Apariencia'];
+      DocumentSnapshot docApariencia = await docRefApariencia.get();
+      Map<String, dynamic> mapApariencia =
+          docApariencia.data() as Map<String, dynamic>;
+      mapApariencia.addAll({'idApariencia': docRefApariencia.id});
+      mapUser['Apariencia'] = mapApariencia;
+
+      return NotaModel.fromFireStore(notaMap);
+    }).toList();
+  }
+
   Future<List<Future<NotaModel>>> getNotasByTitle(
       String title,
       String categoria,

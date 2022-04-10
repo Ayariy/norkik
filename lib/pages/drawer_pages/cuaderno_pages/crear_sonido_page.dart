@@ -88,7 +88,7 @@ class _CrearNotaSonidoState extends State<CrearNotaSonido> {
               padding: EdgeInsets.all(10),
               child: asignatura == null || nameAudio == null
                   ? Center(
-                      child: Text('Ocurrió un problema, intentelo más tarde'),
+                      child: Text('Ocurrió un problema, inténtalo más tarde'),
                     )
                   : Column(
                       children: [Center(child: _getButtonRecord()), _getForm()],
@@ -110,10 +110,10 @@ class _CrearNotaSonidoState extends State<CrearNotaSonido> {
             controller: _tituloController,
             validator: (value) => value!.isNotEmpty
                 ? null
-                : 'Porfavor ingrese el titulo de la nota de audio',
+                : 'Ingresa el título de la nota de audio',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.title_rounded),
-              hintText: 'Titulo del audio',
+              hintText: 'Título del audio',
             ),
           ),
           ListTile(
@@ -216,7 +216,7 @@ class _CrearNotaSonidoState extends State<CrearNotaSonido> {
                             Navigator.pop(context);
                           } else {
                             getAlert(context, 'Error de carga',
-                                'Ocurrió un error en la carga del audio, Porfavor, intentelo más tarde');
+                                'Ocurrió un error en la carga del audio, Por favor, inténtalo más tarde');
                           }
                           // print(audioUrl);
                           setState(() {
@@ -224,7 +224,7 @@ class _CrearNotaSonidoState extends State<CrearNotaSonido> {
                           });
                         } else {
                           getAlert(context, 'Audio sin grabar',
-                              'Porfavor, realize la grabación del audio antes de proceder al guardado');
+                              'Por favor, realiza la grabación del audio antes de proceder a guardarlo');
                         }
                       }
                     })

@@ -35,8 +35,8 @@ class NavigationDrawer extends StatelessWidget {
         child: FadeInLeft(
       child: ListView(
         children: [
-          _getItemTile(Icons.menu_book_sharp, 'Notas - Cuaderno digital',
-              'notas', context),
+          _getItemTile(
+              Icons.menu_book_sharp, 'Cuaderno digital', 'notas', context),
           _getItemTile(Icons.home_work_outlined, 'Tareas', 'tareas', context),
           _getItemTile(
               Icons.note_alt_outlined, 'Asignaturas', 'asignaturas', context),
@@ -80,11 +80,11 @@ class NavigationDrawer extends StatelessWidget {
                   .withOpacity(0.5)),
           GestureDetector(
             onTap: () {
-              if (Brightness.light == Theme.of(context).brightness) {
-                themeChanger.setTheme(getDarkTheme());
-              } else {
-                themeChanger.setTheme(getNorkikTheme());
-              }
+              // if (Brightness.light == Theme.of(context).brightness) {
+              //   themeChanger.setTheme(getDarkTheme());
+              // } else {
+              //   themeChanger.setTheme(getNorkikTheme());
+              // }
             },
             child: ListTile(
               title: Column(
@@ -131,7 +131,9 @@ class NavigationDrawer extends StatelessWidget {
             accountName: Text(usuarioProvider.userGlobal.nombre +
                 ' ' +
                 usuarioProvider.userGlobal.apellido),
-            accountEmail: Text(usuarioProvider.userGlobal.email),
+            accountEmail: usuarioProvider.userGlobal.privacidad.email
+                ? Text(usuarioProvider.userGlobal.email)
+                : null,
             onDetailsPressed: () {
               // usuarioProvider.setUserGlobal(UserModel.userModelNoData());
               Navigator.pushNamed(context, 'perfil');

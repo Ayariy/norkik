@@ -11,6 +11,18 @@ class AparienciaProvider {
     return await aparienciaRef.add(apariencia.toMap());
   }
 
+  Future<void> updateAparienciaById(
+    AparienciaModel aparienciaModel,
+  ) async {
+    DocumentSnapshot docRef =
+        await aparienciaRef.doc(aparienciaModel.idApariencia).get();
+    if (docRef.exists) {
+      await aparienciaRef
+          .doc(aparienciaModel.idApariencia)
+          .update(aparienciaModel.toMap());
+    }
+  }
+
   Future<DocumentReference<Map<String, dynamic>>?> getReferenceAparienciaById(
       String idApariencia) async {
     DocumentReference<Map<String, dynamic>>? docRef;

@@ -64,12 +64,11 @@ class _EditarImgPageState extends State<EditarImgPage> {
         children: [
           TextFormField(
             controller: _tituloController,
-            validator: (value) => value!.isNotEmpty
-                ? null
-                : 'Porfavor ingrese el titulo de la nota',
+            validator: (value) =>
+                value!.isNotEmpty ? null : 'Ingresa el título de la imagen',
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.class_),
-              hintText: 'Titulo de la nota',
+              hintText: 'Título de la imagen',
             ),
           ),
           ListTile(
@@ -109,7 +108,7 @@ class _EditarImgPageState extends State<EditarImgPage> {
                         SizedBox(
                           width: 15,
                         ),
-                        Text('Editar titulo'),
+                        Text('Editar título'),
                       ],
               ),
               textColor: Theme.of(context).appBarTheme.foregroundColor,
